@@ -25,7 +25,7 @@ libraryDependencies += "com.websudos" % "phantom-connectors_2.11" % "1.8.12"
 
 libraryDependencies += "com.datastax.cassandra" % "cassandra-driver-core" % "2.1.6"
 
-libraryDependencies += "joda-time" % "joda-time" % "2.8"
+libraryDependencies += "com.github.nscala-time" % "nscala-time_2.11" % "2.0.0"
 
 libraryDependencies += "org.scala-lang.modules" % "scala-async_2.10" % "0.9.2"
 

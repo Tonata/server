@@ -37,7 +37,7 @@ object TokenResposiory extends TokenResposiory with DataConnection {
       .future()
   }
 
-  def getTokenById(id:String)=Future[Option[Token]] = {
+  def getTokenById(id:String):Future[Option[Token]] = {
     select.where(_.id eqs id).one()
 
   }
