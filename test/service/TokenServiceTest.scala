@@ -1,27 +1,41 @@
 package service
 
+import com.auth0.jwt.JWTVerifier
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 
 /**
  * Created by hashcode on 2015/06/09.
  */
 class TokenServiceTest extends FeatureSpec with GivenWhenThen{
-  feature("Feature") {
+  feature("Create Token ") {
 
-    info("")
-    info("")
-    info("")
+    info("As a User ")
+    info("I want to Create a Token")
+    info("So that I can Store User Information")
 
-    scenario("") {
-      val token = TokenService
+    scenario("Create a Token") {
 
-      Given("")
 
-      When("")
+      Given(" Given The Token Information")
 
-      Then("")
+      val info = Map(
+        "issuer"->"kujali.cput.ac.za",
+        "subject"->"info@kujali.cput.ac.za",
+        "signiture"->"test123",
+        "roles"->"CAREGIVER,NURSE")
 
-      And("")
+      When(" When I call the Create Token API")
+
+      val token = TokenService().createToken(info)
+
+      Then(" Then I should Receive a Token")
+
+      println(" The Token received ", token )
+
+      And("And Verify that it is a correect Token")
+
+      val verified =  new JWTVerifier("test123").verify(token)
+
     }
 
   }

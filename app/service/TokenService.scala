@@ -1,9 +1,8 @@
 package service
 
-import java.util
 import java.util.UUID
 
-import com.auth0.jwt.JWTSigner
+import authentikat.jwt.{JsonWebToken, JwtClaimsSet, JwtHeader}
 import com.github.nscala_time.time.Imports._
 import conf.util.Util
 import domain.Token
@@ -20,13 +19,14 @@ trait TokenService {
   def getTokenById(id: String): Future[Option[Token]]
 
   def revokeToken(id: String)
-  def getTokenRole(token:String)
 
-  def getTokenId(token:String)
+  def getTokenRoles(token: String): String
 
-  def isTokenValid(token:String):Boolean
+  def getTokenId(token: String): String
 
-  def createToken(info: Map[String, String]): String
+  def isTokenValid(token: String): Future[Boolean]
+
+  def createToken(info: Map[String, String]): Future[String]
 }
 
 object TokenService {
@@ -46,27 +46,62 @@ object TokenService {
       TokenResposiory.deleteToken(id)
     }
 
-    override def createToken(info: Map[String, String]): String = {
+    override def createToken(info: Map[String, String]): Future[String] = {
       val duration = (24.hours + 45.minutes + 10.seconds).millis
       val issueDate = (DateTime.now to DateTime.nextSecond).millis
-      val signiture = new JWTSigner(info.get("signiture").get)
-      val claims = new util.HashMap[String, Object]()
-      claims.put("iss", info.get("issuer").get)
-      claims.put("sub", info.get("subject").get)
-      claims.put("exp", new Integer(duration.toString))
-      claims.put("iat", new Integer(issueDate.toString))
-      claims.put("jit", Util.md5Hash(UUID.randomUUID().toString()))
-      claims.put("role", info.get("roles").get)
-      val token = signiture.sign(claims, new JWTSigner.Options()
-        .setExpirySeconds(50).setNotValidBeforeLeeway(10).setIssuedAt(true))
+      val key = KeyService().getKey()
+      val header = JwtHeader("HS256", "FidHub")
+      val claims = JwtClaimsSet(Map(
+        "iss" -> "hashcode.zm",
+        "sub" -> info("subject"),
+        "roles" -> info("roles"),
+        "exp" -> duration,
+        "iat" -> issueDate,
+        "jit" -> Util.md5Hash(UUID.randomUUID().toString)
+      ))
+      val token = for (
+        signiture <- key;
+        generatedToken <- JsonWebToken(header, claims, signiture)
+      ) yield generatedToken
       token
     }
 
-    override def getTokenRole(token: String): Unit = ???
+    override def getTokenRoles(token: String): String = {
+      val claims = getClaims(token)
+      val roles = claims.getOrElse(Map.empty[String, String]).get("roles")
+      val value = roles match {
+        case Some(role)=>role
+        case None=>"NONE"
+      }
+      value
+    }
 
-    override def isTokenValid(token: String): Boolean = ???
+    override def isTokenValid(token: String): Future[Boolean] = {
+      val key = KeyService().getKey()
+      val isValid = for (
+        signiture <- key;
+        status <- JsonWebToken.validate(token, signiture)
+      ) yield status
+      isValid
+    }
 
-    override def getTokenId(token: String): Unit = ???
+    override def getTokenId(token: String): Unit = {
+      val claims = getClaims(token)
+      val tokenId = claims.getOrElse(Map.empty[String, String]).get("jit")
+      val value = tokenId match {
+        case Some(id)=>id
+        case None=>None
+      }
+      value
+    }
+    private def getClaims(token: String): Option[Map[String, String]] = {
+      token match {
+        case JsonWebToken(header, claims, signature) =>
+          claims.asSimpleMap.toOption
+        case x =>
+          None
+      }
+    }
   }
 
 }
