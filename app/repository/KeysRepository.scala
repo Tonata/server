@@ -43,7 +43,7 @@ object KeysRepository extends KeysRepository with DataConnection {
     select.fetchEnumerator() run Iteratee.collect()
   }
 
-  def delete(id:String) : Future[ResultSet]={
+  def deleteKey(id:String) : Future[ResultSet]={
     delete.where(_.id eqs id).future()
   }
 }

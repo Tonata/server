@@ -37,6 +37,8 @@ libraryDependencies += "io.really" % "jwt-scala_2.11" % "1.2.2"
 
 libraryDependencies += "com.jason-goodwin" % "authentikat-jwt_2.11" % "0.4.1"
 
+libraryDependencies += "me.lessis" % "base64_2.11" % "0.2.0"
+
 
 
 

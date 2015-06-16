@@ -9,7 +9,7 @@ import domain.Token
 import repository.TokenResposiory
 
 import scala.concurrent.Future
-
+import scala.concurrent.ExecutionContext.Implicits.global
 /**
  * Created by hashcode on 2015/06/09.
  */
@@ -33,6 +33,7 @@ object TokenService {
   def apply(): TokenService = new TokenServiceImpl
 
   private class TokenServiceImpl extends TokenService {
+
     override def saveToken(token: Token): Unit = {
       TokenResposiory.save(token)
 
@@ -61,7 +62,7 @@ object TokenService {
       ))
       val token = for (
         signiture <- key;
-        generatedToken <- JsonWebToken(header, claims, signiture)
+        generatedToken <- Future{JsonWebToken(header, claims, signiture)}
       ) yield generatedToken
       token
     }
@@ -80,19 +81,20 @@ object TokenService {
       val key = KeyService().getKey()
       val isValid = for (
         signiture <- key;
-        status <- JsonWebToken.validate(token, signiture)
+        status <- Future{JsonWebToken.validate(token, signiture)}
       ) yield status
       isValid
     }
 
-    override def getTokenId(token: String): Unit = {
+    override def getTokenId(token: String): String = {
       val claims = getClaims(token)
       val tokenId = claims.getOrElse(Map.empty[String, String]).get("jit")
-      val value = tokenId match {
-        case Some(id)=>id
-        case None=>None
+
+      val tokenValue = tokenId match {
+        case Some(id)=>id.toString
+        case None=>""
       }
-      value
+      tokenValue
     }
     private def getClaims(token: String): Option[Map[String, String]] = {
       token match {
