@@ -6,3 +6,5 @@ package service
 trait CategoryService {
 
 }
+
+

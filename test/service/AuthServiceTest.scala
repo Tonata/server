@@ -24,9 +24,6 @@ class AuthServiceTest extends FeatureSpec with GivenWhenThen{
       val isValid = service.hashCheck(auth,res)
 
       println(" Is Valid ", isValid)
-
     }
-
   }
-
 }
