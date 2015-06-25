@@ -1,5 +1,8 @@
 package model
 
+import java.util.UUID
+
+import conf.util.Util
 import domain.User
 import play.api.libs.json.Json
 
@@ -23,6 +26,7 @@ object UserModel {
 
   def domain(model: UserModel) = {
     User(
+      Util.md5Hash(UUID.randomUUID().toString()),
       model.otherName,
       model.firstName,
       model.lastName,

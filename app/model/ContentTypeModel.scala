@@ -1,5 +1,8 @@
 package model
 
+import java.util.UUID
+
+import conf.util.Util
 import domain.ContentType
 import play.api.libs.json.Json
 
@@ -18,6 +21,7 @@ object ContentTypeModel {
 
   def domain(model: ContentTypeModel) = {
     ContentType(
+      Util.md5Hash(UUID.randomUUID().toString()),
       model.name,
       model.description
     )

@@ -1,5 +1,8 @@
 package model
 
+import java.util.UUID
+
+import conf.util.Util
 import domain.Role
 import play.api.libs.json.Json
 
@@ -17,6 +20,7 @@ object RoleModel {
   implicit val roleFmt = Json.format[RoleModel]
   def domain(model: RoleModel) = {
     Role(
+      Util.md5Hash(UUID.randomUUID().toString()),
       model.roleName,
       model.description
     )
