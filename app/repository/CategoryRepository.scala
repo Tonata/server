@@ -17,12 +17,15 @@ import scala.concurrent.Future
 //description: String
 class CategoryRepository extends CassandraTable[CategoryRepository, Category] {
 
+  object id extends StringColumn(this) with PartitionKey[String]
+
   object name extends StringColumn(this) with PartitionKey[String]
 
   object description extends StringColumn(this)
 
   override def fromRow(row: Row): Category = {
     Category(
+      id(row),
       name(row),
       description(row)
     )
@@ -34,13 +37,14 @@ object CategoryRepository extends CategoryRepository with DataConnection {
 
   def save(category: Category): Future[ResultSet] = {
     insert
+      .value(_.id,category.id )
       .value(_.name, category.name)
       .value(_.description, category.description)
       .future()
   }
 
-  def getCategoryByName(name: String): Future[Option[Category]] = {
-    select.where(_.name eqs name).one()
+  def getCategoryById(id: String): Future[Option[Category]] = {
+    select.where(_.id eqs id).one()
   }
 
   def getAllCategories: Future[Seq[Category]] = {

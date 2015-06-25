@@ -44,7 +44,7 @@ class AddressRepository extends CassandraTable[AddressRepository, Address] {
 }
 
 object AddressRepository extends AddressRepository with DataConnection {
-  override lazy val tableName = "address"
+  override lazy val tableName = "addreses"
 
   def save(address: Address): Future[ResultSet] = {
     insert
@@ -53,7 +53,6 @@ object AddressRepository extends AddressRepository with DataConnection {
       .value(_.postalAddress, address.postalAddress)
       .value(_.postalCode, address.postalCode)
       .value(_.addressType, address.addressType)
-
       .future()
   }
 

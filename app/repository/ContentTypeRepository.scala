@@ -16,13 +16,15 @@ import scala.concurrent.Future
 //name: String,
 //description: String
 class ContentTypeRepository extends CassandraTable[ContentTypeRepository, ContentType] {
+  object id extends StringColumn(this) with PartitionKey[String]
 
-  object name extends StringColumn(this) with PartitionKey[String]
+  object name extends StringColumn(this)
 
   object description extends StringColumn(this)
 
   override def fromRow(row: Row): ContentType = {
     ContentType(
+      id(row),
       name(row),
       description(row)
     )
@@ -34,13 +36,14 @@ object ContentTypeRepository extends ContentTypeRepository with DataConnection {
 
   def save(contentType: ContentType): Future[ResultSet] = {
     insert
+      .value(_.id,contentType.id)
       .value(_.name, contentType.name)
       .value(_.description, contentType.description)
       .future()
   }
 
-  def getContentTypeByName(name: String): Future[Option[ContentType]] = {
-    select.where(_.name eqs name).one()
+  def getContentTypeById(id: String): Future[Option[ContentType]] = {
+    select.where(_.id eqs id).one()
   }
 
   def getAllContentTypes: Future[Seq[ContentType]] = {

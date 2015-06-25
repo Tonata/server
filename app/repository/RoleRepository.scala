@@ -17,12 +17,15 @@ import scala.concurrent.Future
 //description: String
 class RoleRepository extends CassandraTable[RoleRepository, Role] {
 
-  object roleName extends StringColumn(this) with PartitionKey[String]
+  object id extends StringColumn(this) with PartitionKey[String]
+
+  object roleName extends StringColumn(this)
 
   object description extends StringColumn(this)
 
   override def fromRow(row: Row): Role = {
     Role(
+      id(row),
       roleName(row),
       description(row)
     )
@@ -34,13 +37,14 @@ object RoleRepository extends RoleRepository with DataConnection {
 
   def save(role: Role): Future[ResultSet] = {
     insert
+      .value(_.id,role.id)
       .value(_.roleName, role.roleName)
       .value(_.description, role.description)
       .future()
   }
 
-  def getContentTypeByName(name: String): Future[Option[Role]] = {
-    select.where(_.roleName eqs name).one()
+  def getContentTypeById(id: String): Future[Option[Role]] = {
+    select.where(_.id eqs id).one()
   }
 
   def getAllContentTypes: Future[Seq[Role]] = {
