@@ -5,7 +5,8 @@ import play.api.libs.json.Json
 /**
  * Created by hashcode on 2015/04/16.
  */
-case class Category(name: String,
+case class Category(id: String,
+                    name: String,
                     description: String
                      )
 
