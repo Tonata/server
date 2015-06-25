@@ -23,7 +23,9 @@ import scala.concurrent.Future
 //address: List[String]
 class UserRepository extends CassandraTable[UserRepository, User] {
 
-  object username extends StringColumn(this) with PartitionKey[String]
+  object id extends StringColumn(this) with PartitionKey[String]
+
+  object username extends StringColumn(this)
 
   object firstName extends StringColumn(this)
 
@@ -42,6 +44,7 @@ class UserRepository extends CassandraTable[UserRepository, User] {
 
   override def fromRow(row: Row): User = {
     User(
+      id(row),
       username(row),
       firstName(row),
       lastName(row),
@@ -59,6 +62,7 @@ object UserRepository extends UserRepository with DataConnection {
 
   def save(user: User): Future[ResultSet] = {
     insert
+      .value(_.id,user.id)
       .value(_.address, user.address)
       .value(_.contact, user.contact)
       .value(_.firstName, user.firstName)
@@ -70,13 +74,11 @@ object UserRepository extends UserRepository with DataConnection {
       .future()
   }
 
-  def getUserByUsername(username: String): Future[Option[User]] = {
-    select.where(_.username eqs username).one()
+  def getUserById(id: String): Future[Option[User]] = {
+    select.where(_.id eqs id).one()
   }
 
   def getAllUsers: Future[Seq[User]] = {
     select.fetchEnumerator() run Iteratee.collect()
   }
-
-
 }
