@@ -82,3 +82,4 @@ object UserRepository extends UserRepository with DataConnection {
     select.fetchEnumerator() run Iteratee.collect()
   }
 }
+
