@@ -19,9 +19,7 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 // other, legacy style, accesses its actions statically.
 routesGenerator := InjectedRoutesGenerator
 
-libraryDependencies += "com.websudos" % "phantom-dsl_2.11" % "1.8.12"
-
-libraryDependencies += "com.websudos" % "phantom-connectors_2.11" % "1.8.12"
+libraryDependencies += "com.websudos" % "phantom-dsl_2.11" % "1.6.0"
 
 libraryDependencies += "com.datastax.cassandra" % "cassandra-driver-core" % "2.1.6"
 

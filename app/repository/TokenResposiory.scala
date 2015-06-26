@@ -2,8 +2,9 @@ package repository
 
 import com.datastax.driver.core.{ResultSet, Row}
 import com.websudos.phantom.CassandraTable
-import com.websudos.phantom.dsl._
-import com.websudos.phantom.keys.PartitionKey
+import com.websudos.phantom.Implicits._
+import com.websudos.phantom.iteratee.Iteratee
+import com.websudos.phantom.keys.{PartitionKey, PrimaryKey}
 import conf.connection.DataConnection
 import domain.Token
 

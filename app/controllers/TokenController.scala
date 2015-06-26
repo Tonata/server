@@ -7,4 +7,5 @@ import play.api.mvc.Controller
  */
 class TokenController extends Controller{
 
+
 }
