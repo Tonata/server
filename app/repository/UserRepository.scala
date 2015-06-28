@@ -21,7 +21,7 @@ import scala.concurrent.Future
 //role: List[String],
 //contact: List[String],
 //address: List[String]
-class UserRepository extends CassandraTable[UserRepository, User] {
+sealed class UserRepository extends CassandraTable[UserRepository, User] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 

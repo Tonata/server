@@ -17,7 +17,7 @@ import scala.concurrent.Future
 //phone: String,
 //email: String,
 //contactType: String
-class ContactRepository extends CassandraTable[ContactRepository, Contact] {
+sealed class ContactRepository extends CassandraTable[ContactRepository, Contact] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 

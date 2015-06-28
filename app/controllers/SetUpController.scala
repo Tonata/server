@@ -2,26 +2,27 @@ package controllers
 
 import play.api.mvc.{Action, Controller}
 import repository._
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by hashcode on 2015/06/16.
  */
 class SetUpController extends Controller{
 
-  val add = AddressRepository.create
+
 
   def dbsetup = Action{
     val results = for {
       source <- SourceRepository.createTable()
-      address <- AddressRepository.create
-      category <- CategoryRepository.create
-      contact <- ContactRepository.create
-      content <-ContentRepository.create
-      conteType <-ContentTypeRepository.create
-      keysType <-KeysRepository.create
-      role <- RoleRepository.create
-      token <-TokenResposiory.create
-      user <-UserRepository.create
+      address <- AddressRepository.createTable()
+      category <- CategoryRepository.createTable()
+      contact <- ContactRepository.createTable()
+      content <-ContentRepository.createTable()
+      conteType <-ContentTypeRepository.createTable()
+      keysType <-KeysRepository.createTable()
+      role <- RoleRepository.createTable()
+      token <-TokenResposiory.createTable()
+      user <-UserRepository.createTable()
     } yield (source)
     Ok("")
   }

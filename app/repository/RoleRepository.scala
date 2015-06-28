@@ -15,7 +15,7 @@ import scala.concurrent.Future
  */
 //roleName: String,
 //description: String
-class RoleRepository extends CassandraTable[RoleRepository, Role] {
+sealed class RoleRepository extends CassandraTable[RoleRepository, Role] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 

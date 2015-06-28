@@ -15,7 +15,7 @@ import scala.concurrent.Future
  */
 //name: String,
 //description: String
-class ContentTypeRepository extends CassandraTable[ContentTypeRepository, ContentType] {
+sealed class ContentTypeRepository extends CassandraTable[ContentTypeRepository, ContentType] {
   object id extends StringColumn(this) with PartitionKey[String]
 
   object name extends StringColumn(this)

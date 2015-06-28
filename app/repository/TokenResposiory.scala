@@ -34,7 +34,7 @@ object TokenResposiory extends TokenResposiory with DataConnection {
     insert
       .value(_.id, token.id)
       .value(_.token, token.token)
-      .ttl(12.hours)
+      .ttl(12000)
       .future()
   }
 

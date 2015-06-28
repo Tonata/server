@@ -13,7 +13,7 @@ import scala.concurrent.Future
 /**
  * Created by hashcode on 2015/04/17.
  */
-class ContentRepository extends CassandraTable[ContentRepository, Content] {
+sealed class ContentRepository extends CassandraTable[ContentRepository, Content] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 
@@ -70,5 +70,8 @@ object ContentRepository extends ContentRepository with DataConnection {
     select.fetchEnumerator() run Iteratee.collect()
   }
 
+  def getContents(startValue: Int): Future[Iterator[Content]] = {
+    select.fetchEnumerator() run Iteratee.slice(startValue, 20)
+  }
 
 }

@@ -19,7 +19,7 @@ import scala.concurrent.Future
 //physicalAddress: String,
 //postalCode: String,
 //addressType: String
-class AddressRepository extends CassandraTable[AddressRepository, Address] {
+sealed class AddressRepository extends CassandraTable[AddressRepository, Address] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 

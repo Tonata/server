@@ -13,7 +13,7 @@ import scala.concurrent.Future
 /**
  * Created by hashcode on 2015/06/14.
  */
-class KeysRepository extends CassandraTable[KeysRepository, Keys] {
+sealed class KeysRepository extends CassandraTable[KeysRepository, Keys] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 

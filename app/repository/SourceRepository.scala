@@ -13,13 +13,14 @@ import scala.concurrent.Future
 /**
  * Created by hashcode on 2015/06/25.
  */
-class SourceRepository extends CassandraTable[SourceRepository, Source] {
+sealed class SourceRepository extends CassandraTable[SourceRepository, Source] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 
   object name extends StringColumn(this)
 
   object description extends StringColumn(this)
+
 
   override def fromRow(row: Row): Source = {
     Source(
