@@ -1,26 +1,32 @@
 package service
 
 import domain.Role
+import repository.RoleRepository
+
+import scala.concurrent.Future
 
 /**
  * Created by hashcode on 2015/06/28.
  */
 trait RoleService {
-  def getRole(id:String):Role
+  def getRole(id:String):Future[Option[Role]]
   def create(role:Role)
-  def update(role:Role)
-  def getRoles:List[Role]
+  def getRoles:Future[Seq[Role]]
 }
 
 object RoleService{
   def apply():RoleService= new RoleServiceImpl
   private class RoleServiceImpl extends RoleService{
-    override def getRole(id: String): Role = ???
+    override def getRole(id: String): Future[Option[Role]] = {
+      RoleRepository.getRoleById(id)
+    }
 
-    override def getRoles: List[Role] = ???
+    override def getRoles: Future[Seq[Role]] = {
+      RoleRepository.getRoles
+    }
 
-    override def update(role: Role): Unit = ???
-
-    override def create(role: Role): Unit = ???
+    override def create(role: Role): Unit = {
+      RoleRepository.save(role)
+    }
   }
 }

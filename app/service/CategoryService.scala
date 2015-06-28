@@ -10,10 +10,8 @@ import scala.concurrent.Future
  */
 trait CategoryService {
   def getCategories: Future[Seq[Category]]
-  def getCategory(id:String):Category
+  def getCategory(id:String):Future[Option[Category]]
   def create(category:Category)
-
-
 
 }
 

@@ -43,11 +43,11 @@ object RoleRepository extends RoleRepository with DataConnection {
       .future()
   }
 
-  def getContentTypeById(id: String): Future[Option[Role]] = {
+  def getRoleById(id: String): Future[Option[Role]] = {
     select.where(_.id eqs id).one()
   }
 
-  def getAllContentTypes: Future[Seq[Role]] = {
+  def getRoles: Future[Seq[Role]] = {
     select.fetchEnumerator() run Iteratee.collect()
   }
 }
