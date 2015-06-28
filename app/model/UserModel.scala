@@ -39,5 +39,4 @@ object UserModel {
       model.address
     )
   }
-
 }
