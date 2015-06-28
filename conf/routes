@@ -3,9 +3,54 @@
 # ~~~~
 
 # Home page
-GET        /                    @controllers.Application.index
-GET        /setup               @controllers.SetUpController.dbsetup
+GET         /                        @controllers.Application.index
+GET         /setup                   @controllers.SetUpController.dbsetup
+
+# Category API
+POST        /api/cat/create          @controllers.CategoryController.create
+GET         /api/cat/:id             @controllers.CategoryController.getCategory(id)
+PUT         /api/cat/update          @controllers.CategoryController.update
+GET         /api/cat/cats            @controllers.CategoryController.getAll
+
+# Content API
+
+POST        /api/cont/create         @controllers.ContentController.create
+GET         /api/cont/:id            @controllers.ContentController.getContent(id)
+PUT         /api/cont/update         @controllers.ContentController.update
+GET         /api/cont/conts          @controllers.ContentController.getAll
+
+# ContentType API
+
+POST        /api/ctype/create        @controllers.ContntTypeController.create
+GET         /api/ctype/:id           @controllers.ContntTypeController.getContentType(id)
+PUT         /api/ctype/update        @controllers.ContntTypeController.update
+GET         /api/ctype/ctypes        @controllers.ContntTypeController.getAll
+
+
+# Role API
+
+POST        /api/role/create         @controllers.RoleController.create
+GET         /api/role/:id            @controllers.RoleController.getRole(id)
+PUT         /api/role/update         @controllers.RoleController.update
+GET         /api/role/roles          @controllers.RoleController.getAll
+
+
+#Source API
+
+POST        /api/src/create          @controllers.SourceController.create
+GET         /api/src/:id             @controllers.SourceController.getSource(id)
+PUT         /api/src/update          @controllers.SourceController.update
+GET         /api/src/srcs            @controllers.SourceController.getAll
+
+# User API
+
+POST        /api/user/create         @controllers.UserController.create
+GET         /api/user/:id            @controllers.UserController.getUser(id)
+PUT         /api/user/update         @controllers.UserController.update
+GET         /api/user/users          @controllers.UserController.getAll
+
+
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file            controllers.Assets.versioned(path="/public", file: Asset)
