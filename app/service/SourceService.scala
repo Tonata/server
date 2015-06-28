@@ -1,5 +1,6 @@
 package service
 
+import com.datastax.driver.core
 import domain.Source
 import repository.SourceRepository
 
@@ -11,7 +12,7 @@ import scala.concurrent.Future
 trait SourceService {
   def getSource(id:String):Future[Option[Source]]
   def getSources:Future[Seq[Source]]
-  def create(source:Source)
+  def create(source:Source):Future[core.ResultSet]
 }
 object SourceService{
   def apply():SourceService = new SourceServiceImpl
@@ -25,7 +26,7 @@ object SourceService{
       SourceRepository.getAllSources
     }
 
-    override def create(source: Source): Unit = {
+    override def create(source: Source): Future[core.ResultSet] = {
       SourceRepository.save(source)
     }
   }

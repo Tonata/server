@@ -3,6 +3,7 @@ package service
 import java.util.UUID
 
 import authentikat.jwt.{JsonWebToken, JwtClaimsSet, JwtHeader}
+import com.datastax.driver.core
 import com.github.nscala_time.time.Imports._
 import conf.util.Util
 import domain.Token
@@ -14,7 +15,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
  * Created by hashcode on 2015/06/09.
  */
 trait TokenService {
-  def saveToken(token: Token)
+  def saveToken(token: Token):Future[core.ResultSet]
 
   def getTokenById(id: String): Future[Option[Token]]
 
@@ -34,7 +35,7 @@ object TokenService {
 
   private class TokenServiceImpl extends TokenService {
 
-    override def saveToken(token: Token): Unit = {
+    override def saveToken(token: Token): Future[core.ResultSet] = {
       TokenResposiory.save(token)
 
     }

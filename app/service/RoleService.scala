@@ -1,5 +1,6 @@
 package service
 
+import com.datastax.driver.core
 import domain.Role
 import repository.RoleRepository
 
@@ -10,7 +11,7 @@ import scala.concurrent.Future
  */
 trait RoleService {
   def getRole(id:String):Future[Option[Role]]
-  def create(role:Role)
+  def create(role:Role):Future[core.ResultSet]
   def getRoles:Future[Seq[Role]]
 }
 
@@ -25,7 +26,7 @@ object RoleService{
       RoleRepository.getRoles
     }
 
-    override def create(role: Role): Unit = {
+    override def create(role: Role): Future[core.ResultSet] = {
       RoleRepository.save(role)
     }
   }

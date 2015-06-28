@@ -1,5 +1,6 @@
 package service
 
+import com.datastax.driver.core
 import domain.User
 import repository.UserRepository
 
@@ -9,7 +10,7 @@ import scala.concurrent.Future
  * Created by hashcode on 2015/06/09.
  */
 trait UserService {
-  def create(user:User)
+  def create(user:User):Future[core.ResultSet]
   def getUser(id:String):Future[Option[User]]
   def getUsers:Future[Seq[User]]
   def changePassword(password:String)
@@ -18,7 +19,7 @@ trait UserService {
 object UserService{
   def apply():UserService = new UserServiceImpl
   private class UserServiceImpl extends UserService{
-    override def create(user: User): Unit = {
+    override def create(user: User): Future[core.ResultSet] = {
       UserRepository.save(user)
     }
 
@@ -30,7 +31,7 @@ object UserService{
       UserRepository.getAllUsers
     }
 
-    override def changePassword(password: String): Unit = {
+    override def changePassword(password: String) = {
 
     }
   }

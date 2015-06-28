@@ -1,6 +1,7 @@
 package service
 
 
+import com.datastax.driver.core
 import domain.Content
 import repository.ContentRepository
 
@@ -11,7 +12,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
  * Created by hashcode on 2015/06/09.
  */
 trait ContentService {
-  def create(content: Content)
+  def create(content: Content):Future[core.ResultSet]
 
   def getContent(id: String): Future[Option[Content]]
 
@@ -26,7 +27,7 @@ object ContentService {
   def apply(): ContentService = new ContentServiceImpl
 
   private class ContentServiceImpl extends ContentService {
-    override def create(content: Content): Unit = {
+    override def create(content: Content): Future[core.ResultSet] = {
       ContentRepository.save(content)
     }
 

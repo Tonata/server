@@ -1,5 +1,9 @@
 package service
 
+
+import java.sql.ResultSet
+
+import com.datastax.driver.core
 import domain.Category
 import repository.CategoryRepository
 
@@ -11,7 +15,7 @@ import scala.concurrent.Future
 trait CategoryService {
   def getCategories: Future[Seq[Category]]
   def getCategory(id:String):Future[Option[Category]]
-  def create(category:Category)
+  def create(category:Category):Future[core.ResultSet]
 
 }
 
@@ -26,7 +30,7 @@ object CategoryService {
       CategoryRepository.getCategoryById(id)
     }
 
-    override def create(category: Category): Unit = {
+    override def create(category: Category):Future[core.ResultSet] = {
       CategoryRepository.save(category)
     }
   }

@@ -1,5 +1,6 @@
 package service
 
+import com.datastax.driver.core
 import domain.ContentType
 import repository.ContentTypeRepository
 
@@ -10,9 +11,8 @@ import scala.concurrent.Future
  */
 trait ContentTypeService {
   def getContentType(id:String):Future[Option[ContentType]]
-  def create(contentType:ContentType)
+  def create(contentType:ContentType):Future[core.ResultSet]
   def getContentTypes:Future[Seq[ContentType]]
-  def update(contentType:ContentType)
 }
 
 object ContentTypeService{
@@ -23,15 +23,12 @@ object ContentTypeService{
       ContentTypeRepository.getContentTypeById(id)
     }
 
-    override def update(contentType: ContentType): Unit = {
-      ContentTypeRepository.save(contentType)
-    }
 
     override def getContentTypes: Future[Seq[ContentType]] = {
       ContentTypeRepository.getAllContentTypes
     }
 
-    override def create(contentType: ContentType): Unit = {
+    override def create(contentType: ContentType): Future[core.ResultSet] = {
       ContentTypeRepository.save(contentType)
     }
   }
