@@ -21,7 +21,7 @@ class SetUpController extends Controller{
       conteType <-ContentTypeRepository.createTable()
       keysType <-KeysRepository.createTable()
       role <- RoleRepository.createTable()
-      token <-TokenResposiory.createTable()
+      token <-TokenRepository.createTable()
       user <-UserRepository.createTable()
     } yield (source)
     Ok("")

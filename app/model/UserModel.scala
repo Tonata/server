@@ -15,7 +15,7 @@ case class UserModel(otherName: String,
                      username: String,
                      enable: Boolean,
                      password: String,
-                     role: List[String],
+                     role: Set[String],
                      contact: List[String],
                      address: List[String]
                       ) {

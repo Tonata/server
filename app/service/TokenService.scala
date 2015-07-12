@@ -7,10 +7,10 @@ import com.datastax.driver.core
 import com.github.nscala_time.time.Imports._
 import conf.util.Util
 import domain.Token
-import repository.TokenResposiory
+import repository.TokenRepository
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 /**
  * Created by hashcode on 2015/06/09.
  */
@@ -35,23 +35,27 @@ object TokenService {
 
   private class TokenServiceImpl extends TokenService {
 
+    val keyvv = KeyService().getKey() map {
+      values => values.head.value
+    }
+
     override def saveToken(token: Token): Future[core.ResultSet] = {
-      TokenResposiory.save(token)
+      TokenRepository.save(token)
 
     }
 
     override def getTokenById(id: String): Future[Option[Token]] = {
-      TokenResposiory.getTokenById(id)
+      TokenRepository.getTokenById(id)
     }
 
     override def revokeToken(id: String): Unit = {
-      TokenResposiory.deleteToken(id)
+      TokenRepository.deleteToken(id)
     }
 
     override def createToken(info: Map[String, String]): Future[String] = {
       val duration = (24.hours + 45.minutes + 10.seconds).millis
       val issueDate = (DateTime.now to DateTime.nextSecond).millis
-      val key = KeyService().getKey()
+
       val header = JwtHeader("HS256", "FidHub")
       val claims = JwtClaimsSet(Map(
         "iss" -> "hashcode.zm",
@@ -61,8 +65,9 @@ object TokenService {
         "iat" -> issueDate,
         "jit" -> Util.md5Hash(UUID.randomUUID().toString)
       ))
+
       val token = for (
-        signiture <- key;
+        signiture <- keyvv;
         generatedToken <- Future{JsonWebToken(header, claims, signiture)}
       ) yield generatedToken
       token
@@ -79,9 +84,8 @@ object TokenService {
     }
 
     override def isTokenValid(token: String): Future[Boolean] = {
-      val key = KeyService().getKey()
       val isValid = for (
-        signiture <- key;
+        signiture <- keyvv;
         status <- Future{JsonWebToken.validate(token, signiture)}
       ) yield status
       isValid

@@ -1,10 +1,5 @@
-import java.io.Serializable
+val fruits = Seq("apple", "banana", "orange")
 
-sealed trait Color
-final case object Red extends Color
-final case object Green extends Color
-final case object Blue extends Color
+fruits.map(x=> x.toUpperCase)
 
-val colors = List(Red, Green, Blue)
-
-
+fruits.flatMap(_.toUpperCase)

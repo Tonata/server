@@ -7,33 +7,34 @@ import com.websudos.phantom.iteratee.Iteratee
 import com.websudos.phantom.keys.{PartitionKey, PrimaryKey}
 import conf.connection.DataConnection
 import domain.Token
+import views.html.helper.select
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 /**
  * Created by hashcode on 2015/06/09.
  */
-class TokenResposiory extends CassandraTable[TokenResposiory, Token] {
+class TokenRepository extends CassandraTable[TokenRepository, Token] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 
-  object token extends StringColumn(this)
+  object tokenValue extends StringColumn(this)
 
   override def fromRow(row: Row): Token = {
     Token(
       id(row),
-      token(row)
+      tokenValue(row)
     )
   }
 }
 
-object TokenResposiory extends TokenResposiory with DataConnection {
+object TokenRepository extends TokenRepository with DataConnection {
   override lazy val tableName = "tokens"
 
   def save(token: Token): Future[ResultSet] = {
     insert
       .value(_.id, token.id)
-      .value(_.token, token.token)
+      .value(_.tokenValue, token.tokenValue)
       .ttl(12000)
       .future()
   }

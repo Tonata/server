@@ -12,7 +12,7 @@ case class User(id: String,
                 username: String,
                 enable: Boolean,
                 password: String,
-                role: List[String],
+                roles: Set[String],
                 contact: List[String],
                 address: List[String]
                  )

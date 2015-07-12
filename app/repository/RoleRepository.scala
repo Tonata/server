@@ -8,6 +8,7 @@ import com.websudos.phantom.keys.{PartitionKey, PrimaryKey}
 import conf.connection.DataConnection
 import domain.Role
 
+
 import scala.concurrent.Future
 
 /**

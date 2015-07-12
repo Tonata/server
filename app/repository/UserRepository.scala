@@ -36,7 +36,7 @@ sealed class UserRepository extends CassandraTable[UserRepository, User] {
 
   object password extends StringColumn(this)
 
-  object role extends ListColumn[UserRepository, User, String](this)
+  object roles extends SetColumn[UserRepository, User, String](this)
 
   object contact extends ListColumn[UserRepository, User, String](this)
 
@@ -52,7 +52,7 @@ sealed class UserRepository extends CassandraTable[UserRepository, User] {
       otherName(row),
       enable(row),
       password(row),
-      role(row),
+      roles(row),
       contact(row),
       address(row)
     )
@@ -72,7 +72,7 @@ object UserRepository extends UserRepository with DataConnection {
       .value(_.lastName, user.lastName)
       .value(_.otherName, user.otherName)
       .value(_.password, user.password)
-      .value(_.role, user.role)
+      .value(_.roles, user.roles)
       .value(_.username, user.username)
       .future()
   }
