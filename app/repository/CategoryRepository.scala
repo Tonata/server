@@ -15,11 +15,13 @@ import scala.concurrent.Future
  */
 //name: String,
 //description: String
-sealed class CategoryRepository extends CassandraTable[CategoryRepository, Category] {
+sealed class
+
+CategoryRepository extends CassandraTable[CategoryRepository, Category] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 
-  object name extends StringColumn(this) with PartitionKey[String]
+  object name extends StringColumn(this)
 
   object description extends StringColumn(this)
 

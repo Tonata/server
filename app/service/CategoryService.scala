@@ -24,6 +24,7 @@ object CategoryService {
 
   private class CategoryServiceImpl extends CategoryService{
     override def getCategories: Future[Seq[Category]]= {
+      println("This Method has been Called")
       CategoryRepository.getAllCategories
     }
     override def getCategory(id: String): Future[Option[Category]] = {
