@@ -27,7 +27,7 @@ class UserControllerTest extends Specification{
       val jsonstring ="""{"otherName":"other","firstName":"first","lastName":"lastname","username":"username","enable":true,"password":"test13","role":["23"],"contact":["56"],"address":["231"]}"""
 
       val json = Json.parse(jsonstring)
-      println(" The JSON Output",json)
+   
 
       val Some(result) = route(FakeRequest(
         POST, "/api/user/create").withJsonBody(json)
