@@ -40,6 +40,8 @@ libraryDependencies += "com.jason-goodwin" % "authentikat-jwt_2.11" % "0.4.1"
 
 libraryDependencies += "me.lessis" % "base64_2.11" % "0.2.0"
 
+libraryDependencies += "com.google.code.gson" % "gson" % "2.3.1"
+
 
 
 
