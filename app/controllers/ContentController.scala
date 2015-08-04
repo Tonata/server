@@ -39,5 +39,23 @@ class ContentController extends Controller{
       results map(result =>Ok(Json.toJson(category)))
   }
 
+  def isPlublished(id: String) = Action.async {
+    service.isPublished(id) map (content => Ok(Json.toJson(content)))
+  }
 
+  def isEditedAndPlublished(id: String) = Action.async {
+    service.isInEditOrPublished(id) map (content => Ok(Json.toJson(content)))
+  }
+
+  def getContentByCategory(id: String, initValue:String) = Action.async {
+    service.getContentsByCateGory(initValue.toInt,id) map (content => Ok(Json.toJson(content.toSeq)))
+  }
+
+  def getContentByTypeId(id: String, initValue:String) = Action.async {
+    service.getContentByType(id, initValue.toInt) map (content => Ok(Json.toJson(content.toSeq)))
+  }
+
+  def getRelatedContent(id: String) = Action.async {
+    service.relatedItems(id)map (content => Ok(Json.toJson(content)))
+  }
 }

@@ -3,11 +3,10 @@ package service
 
 import com.datastax.driver.core
 import domain.Content
-import play.api.data
 import repository.ContentRepository
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 /**
  * Created by hashcode on 2015/06/09.
@@ -28,9 +27,9 @@ trait ContentService {
 
   def getContentsPerCategory(catId: String, initValue: Int): Future[Iterator[Content]]
 
-  def isInEditOrPublished(id:String)
+  def isInEditOrPublished(id:String):Future[Seq[Boolean]]
 
-  def isPublished(id:String)
+  def isPublished(id:String):Future[Seq[Boolean]]
 
   def getContentByType(typeName:String,initValue:Int):Future[Iterator[Content]]
 }
@@ -76,10 +75,16 @@ object ContentService {
       getContents(initValue: Int) map( contents => contents filter(content => content.category==cateId))
     }
 
-    override def isInEditOrPublished(id: String): Unit = ???
-
-    override def isPublished(id: String): Unit ={
+    override def isInEditOrPublished(id: String): Future[Seq[Boolean]] = {
       val published = getAllContent map(content=> content )
+          published map(conts => conts map( v => v.source==id))
+
+    }
+
+    override def isPublished(id: String): Future[Seq[Boolean]] ={
+      val published = getAllContent map(content=> content filter(cont=> cont.contentType.equalsIgnoreCase("Published")))
+
+      published map( conts => conts map( v => v.source==id))
     }
 
     override def getContentByType(typeName: String, initValue: Int): Future[Iterator[Content]] = {

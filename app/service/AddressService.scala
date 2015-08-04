@@ -3,6 +3,7 @@ package service
 import com.datastax.driver.core
 import com.datastax.driver.core.ResultSet
 import domain.{Contact, Address, Category}
+import repository.{ContactRepository, AddressRepository}
 
 import scala.concurrent.Future
 
@@ -19,13 +20,21 @@ trait AddressService {
 object AddressService{
   def apply():AddressService = new AddressServiceImpl
   private class AddressServiceImpl extends AddressService{
-    override def getAddress(id: String): Future[Option[Address]] = ???
+    override def getAddress(id: String): Future[Option[Address]] = {
+      AddressRepository.getAddressId(id)
+    }
 
-    override def createAddress(address: Address): Future[ResultSet] = ???
+    override def createAddress(address: Address): Future[ResultSet] = {
+      AddressRepository.save(address)
+    }
 
-    override def getContact(id: String): Future[Option[Contact]] = ???
+    override def getContact(id: String): Future[Option[Contact]] = {
+      ContactRepository.getContactById(id)
+    }
 
-    override def createContact(contact: Contact): Future[ResultSet] = ???
+    override def createContact(contact: Contact): Future[ResultSet] = {
+      ContactRepository.save(contact)
+    }
   }
 
 }
