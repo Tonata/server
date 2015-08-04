@@ -17,7 +17,9 @@ import play.api.libs.json.Json
 case class ContactModel (phone: String,
                     email: String,
                     contactType: String
-                     )
+                     ){
+  def getDomain:Contact = ContactModel.domain(this)
+}
 
 object ContactModel {
   implicit val contactFmt = Json.format[ContactModel]

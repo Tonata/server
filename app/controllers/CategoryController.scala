@@ -25,12 +25,10 @@ class CategoryController extends Controller {
 
   def getAll = Action.async {
     request =>
-      println("This is called in Controller")
       service.getCategories map (categories => Ok(Json.toJson(categories)))
   }
 
   def getCategory(id: String) = Action.async {
-    println("This is Method in Controller", id)
     service.getCategory(id) map (category => Ok(Json.toJson(category)))
   }
 

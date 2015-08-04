@@ -38,4 +38,6 @@ class ContentController extends Controller{
       val results = service.create(category)
       results map(result =>Ok(Json.toJson(category)))
   }
+
+
 }
