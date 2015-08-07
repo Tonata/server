@@ -19,6 +19,9 @@ trait ContentService {
 
   def getAllContent: Future[Seq[Content]]
 
+  def getRawContent(initValue: Int): Future[Iterator[Content]]
+
+
   def relatedItems(contentId: String): Future[Seq[Content]]
 
   def getContents(initValue: Int): Future[Iterator[Content]]
@@ -72,7 +75,7 @@ object ContentService {
     }
 
     override def getContentsByCateGory(initValue: Int, cateId: String): Future[Iterator[Content]] = {
-      getContents(initValue: Int) map( contents => contents filter(content => content.category==cateId))
+      getContents(initValue) map( contents => contents filter(content => content.category==cateId))
     }
 
     override def isInEditOrPublished(id: String): Future[Seq[Boolean]] = {
@@ -89,6 +92,11 @@ object ContentService {
 
     override def getContentByType(typeName: String, initValue: Int): Future[Iterator[Content]] = {
       getContents(initValue) map ( content => content filter(cont=> cont.source==typeName))
+    }
+
+     override def getRawContent(initValue: Int): Future[Iterator[Content]] = {
+      getContents(initValue) map( contents => contents filter(content =>
+        ((content.contentType=="RAW") & (content.source=="MOBILE"))))
     }
   }
 }

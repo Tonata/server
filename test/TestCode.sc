@@ -1,20 +1,11 @@
-val fruits = Seq("apple", "banana", "orange")
+// This is a Functor
+trait Functor[M[_]] {
 
-fruits.map(x=> x.toUpperCase)
-
-fruits.flatMap(_.toUpperCase)
-
-implicit val minOrdering = Ordering.fromLessThan[Int](_ > _)
-
-val l = List(2,4,7,1,3,9,10).sorted
-
-l filter(x=>x > 4)
+  /* convert f into a function mapping M[A] to M[B]
+   * eg. if M were List, and f was Int ⇒ String
+   * fmap would yield List[Int] ⇒ List[String]
+   */
+  def fmap[A, B](f: A ⇒ B): M[A] ⇒ M[B]
+}
 
 
-class MyBox[T](val value:T)
-
-val boxedString:MyBox[String] = new MyBox[String]("Hello")
-
-
-
-def rawLengthOf(a:String):Int = a.length

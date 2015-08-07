@@ -58,4 +58,8 @@ class ContentController extends Controller{
   def getRelatedContent(id: String) = Action.async {
     service.relatedItems(id)map (content => Ok(Json.toJson(content)))
   }
+
+  def getRawContent(num: String): Unit ={
+    service.getRawContent(num.toInt) map (content=> Ok(Json.toJson(content.toSeq)))
+  }
 }

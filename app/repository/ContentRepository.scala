@@ -52,7 +52,7 @@ object ContentRepository extends ContentRepository with DataConnection {
   def save(content: Content): Future[ResultSet] = {
     insert
       .value(_.id, content.id)
-      .value(_.category, content.id)
+      .value(_.category, content.category)
       .value(_.content, content.content)
       .value(_.contentType, content.contentType)
       .value(_.creator, content.creator)
