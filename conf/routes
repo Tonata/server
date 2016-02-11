@@ -69,6 +69,9 @@ GET         /api/ctype/:id                   @controllers.ContntTypeController.g
 PUT         /api/ctype/update                @controllers.ContntTypeController.update
 GET         /api/ctype/get/ctypes            @controllers.ContntTypeController.getAll
 
+#Media Upload and Read End Point
+POST        /api/upload                      @controllers.FilesController.upload
+GET         /api/static/:id/:filename        @controllers.FilesController.getFile(id,filename)
 
 
 # Role API
