@@ -28,7 +28,7 @@ sealed class KeysRepository extends CassandraTable[KeysRepository, Keys] {
 }
 
 object KeysRepository extends KeysRepository with DataConnection {
-  override lazy val tableName = "keys"
+  override lazy val tableName = "tokenkeys"
 
   def save(key: Keys): Future[ResultSet] = {
     insert

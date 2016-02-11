@@ -23,7 +23,12 @@ class SetUpController extends Controller{
       role <- RoleRepository.createTable()
       token <-TokenRepository.createTable()
       user <-UserRepository.createTable()
+      media <- MediaRepository.createTable()
+      pub <-PublishedContentRepository.createTable()
+      raw <-RawContentRepository.createTable()
+      edit <-EditedContentRepository.createTable()
+
     } yield (source)
-    Ok("")
+    Ok("Done")
   }
 }

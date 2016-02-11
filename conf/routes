@@ -3,69 +3,98 @@
 # ~~~~
 
 # Home page
-GET         /                              @controllers.Application.index
-GET         /setup                         @controllers.SetUpController.dbsetup
+GET         /                                @controllers.Application.index
+GET         /setup                           @controllers.SetUpController.dbsetup
 
 # Address and Contact API
-POST        /api/address/create            @controllers.AddressController.createAddress
-POST        /api/contact/create            @controllers.AddressController.createContact
-GET         /api/address/get/:id           @controllers.AddressController.getAddress(id)
-GET         /api/contact/get/:id           @controllers.AddressController.getContact(id)
+POST        /api/address/create              @controllers.AddressController.createAddress
+POST        /api/contact/create              @controllers.AddressController.createContact
+GET         /api/address/get/:id             @controllers.AddressController.getAddress(id)
+GET         /api/contact/get/:id             @controllers.AddressController.getContact(id)
 
 
 
 # Category API
-POST        /api/cat/create                @controllers.CategoryController.create
-GET         /api/cat/:id                   @controllers.CategoryController.getCategory(id)
-PUT         /api/cat/update                @controllers.CategoryController.update
-GET         /api/cat/get/cats              @controllers.CategoryController.getAll
+POST        /api/cat/create                  @controllers.CategoryController.create
+GET         /api/cat/:id                     @controllers.CategoryController.getCategory(id)
+PUT         /api/cat/update                  @controllers.CategoryController.update
+GET         /api/cat/get/cats                @controllers.CategoryController.getAll
 
 
 # Content API
 
-POST        /api/cont/create               @controllers.ContentController.create
-GET         /api/cont/:id                  @controllers.ContentController.getContent(id)
-PUT         /api/cont/update               @controllers.ContentController.update
-GET         /api/cont/get/conts            @controllers.ContentController.getAll
-GET         /api/cont/edited/:id           @controllers.ContentController.isEditedAndPlublished(id)
-GET         /api/cont/published/:id        @controllers.ContentController.isPlublished(id)
-GET         /api/cont/related/:id          @controllers.ContentController.getRelatedContent(id)
-GET         /api/cont/bycat/:id/:num       @controllers.ContentController.getContentByCategory(id,num)
-GET         /api/cont/bytype/:id/:num      @controllers.ContentController.getContentByTypeId(id,num)
+POST        /api/cont/create                 @controllers.ContentController.create
+GET         /api/cont/:id                    @controllers.ContentController.getContent(id)
+PUT         /api/cont/update                 @controllers.ContentController.update
+GET         /api/cont/get/conts              @controllers.ContentController.getAll
+GET         /api/cont/edited/:id             @controllers.ContentController.isEditedAndPlublished(id)
+GET         /api/cont/published/:id          @controllers.ContentController.isPlublished(id)
+GET         /api/cont/related/:id            @controllers.ContentController.getRelatedContent(id)
+GET         /api/cont/bycat/:id/:num         @controllers.ContentController.getContentByCategory(id,num)
+GET         /api/cont/bytype/:id/:num        @controllers.ContentController.getContentByTypeId(id,num)
+
+# Raw
+
+POST        /api/cont/raw/create             @controllers.RawContentController.create
+GET         /api/cont/raw/:id                @controllers.RawContentController.getContent(id)
+PUT         /api/cont/raw/update             @controllers.RawContentController.update
+GET         /api/cont/raw/get/conts          @controllers.RawContentController.getAll
+
+# Edited
+
+POST        /api/cont/ed/create              @controllers.EditedContentController.create
+GET         /api/cont/ed//:id                @controllers.EditedContentController.getContent(id)
+PUT         /api/cont/ed/update              @controllers.EditedContentController.update
+GET         /api/cont/ed/get/conts           @controllers.EditedContentController.getAll
+
+# Published
+
+POST        /api/cont/pub/create             @controllers.PublishedContentController.create
+GET         /api/cont/pub/:id                @controllers.PublishedContentController.getContent(id)
+PUT         /api/cont/pub/update             @controllers.PublishedContentController.update
+GET         /api/cont/pub/get/conts          @controllers.PublishedContentController.getAll
+
+#Media
+
+POST        /api/media/create                @controllers.MediaController.create
+GET         /api/media/:contentId/:id        @controllers.MediaController.getContent(contentId,id)
+PUT         /api/media/update                @controllers.MediaController.update
+GET         /api/media/get/:contentId        @controllers.MediaController.getAll(contentId)
+
 
 # ContentType API
 
-POST        /api/ctype/create              @controllers.ContntTypeController.create
-GET         /api/ctype/:id                 @controllers.ContntTypeController.getContentType(id)
-PUT         /api/ctype/update              @controllers.ContntTypeController.update
-GET         /api/ctype/get/ctypes          @controllers.ContntTypeController.getAll
+POST        /api/ctype/create                @controllers.ContntTypeController.create
+GET         /api/ctype/:id                   @controllers.ContntTypeController.getContentType(id)
+PUT         /api/ctype/update                @controllers.ContntTypeController.update
+GET         /api/ctype/get/ctypes            @controllers.ContntTypeController.getAll
 
 
 
 # Role API
 
-POST        /api/role/create               @controllers.RoleController.create
-GET         /api/role/:id                  @controllers.RoleController.getRole(id)
-PUT         /api/role/update               @controllers.RoleController.update
-GET         /api/role/get/roles            @controllers.RoleController.getAll
+POST        /api/role/create                 @controllers.RoleController.create
+GET         /api/role/:id                    @controllers.RoleController.getRole(id)
+PUT         /api/role/update                 @controllers.RoleController.update
+GET         /api/role/get/roles              @controllers.RoleController.getAll
 
 
 #Source API
 
-POST        /api/src/create                @controllers.SourceController.create
-GET         /api/src/:id                   @controllers.SourceController.getSource(id)
-PUT         /api/src/update                @controllers.SourceController.update
-GET         /api/src/get/srcs              @controllers.SourceController.getAll
+POST        /api/src/create                  @controllers.SourceController.create
+GET         /api/src/:id                     @controllers.SourceController.getSource(id)
+PUT         /api/src/update                  @controllers.SourceController.update
+GET         /api/src/get/srcs                @controllers.SourceController.getAll
 
 # User API
 
-POST        /api/user/create               @controllers.UserController.create
-GET         /api/user/:id                  @controllers.UserController.getUser(id)
-PUT         /api/user/update               @controllers.UserController.update
-GET         /api/user/get/users            @controllers.UserController.getAll
+POST        /api/user/create                 @controllers.UserController.create
+GET         /api/user/:id                    @controllers.UserController.getUser(id)
+PUT         /api/user/update                 @controllers.UserController.update
+GET         /api/user/get/users              @controllers.UserController.getAll
 
 
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                  controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)

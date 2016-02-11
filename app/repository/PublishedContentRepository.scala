@@ -14,7 +14,7 @@ import scala.concurrent.Future
 /**
   * Created by hashcode on 2016/02/11.
   */
-class PublishedContentRepository extends CassandraTable[EditedContentRepository, PublishedContent] {
+class PublishedContentRepository extends CassandraTable[PublishedContentRepository, PublishedContent] {
 
 
   object id extends StringColumn(this) with PartitionKey[String]
