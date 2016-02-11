@@ -13,14 +13,7 @@ import scala.concurrent.Future
 /**
  * Created by hashcode on 2015/04/17.
  */
-//otherName: String,
-//firstName: String,
-//lastName: String,
-//username: String,
-//password: String,
-//role: List[String],
-//contact: List[String],
-//address: List[String]
+
 sealed class UserRepository extends CassandraTable[UserRepository, User] {
 
   object id extends StringColumn(this) with PartitionKey[String]
@@ -43,13 +36,14 @@ sealed class UserRepository extends CassandraTable[UserRepository, User] {
   object address extends ListColumn[UserRepository, User, String](this)
 
 
+
   override def fromRow(row: Row): User = {
     User(
       id(row),
-      username(row),
+      otherName(row),
       firstName(row),
       lastName(row),
-      otherName(row),
+      username(row),
       enable(row),
       password(row),
       roles(row),

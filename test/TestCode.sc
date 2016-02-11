@@ -1,11 +1,12 @@
-// This is a Functor
-trait Functor[M[_]] {
+import scala.concurrent.{ExecutionContext, Future}
+import ExecutionContext.Implicits.global
+import scala.async.Async.{async, await}
 
-  /* convert f into a function mapping M[A] to M[B]
-   * eg. if M were List, and f was Int ⇒ String
-   * fmap would yield List[Int] ⇒ List[String]
-   */
-  def fmap[A, B](f: A ⇒ B): M[A] ⇒ M[B]
+val (f1,f2,f3) = (Future {1}, Future {2}, Future {3})
+
+lazy val res = async{
+  await {f1} + await {f2} + await {f3}
+
 }
-
+println("The Server is ",res)
 

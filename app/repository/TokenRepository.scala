@@ -3,14 +3,11 @@ package repository
 import com.datastax.driver.core.{ResultSet, Row}
 import com.websudos.phantom.CassandraTable
 import com.websudos.phantom.Implicits._
-import com.websudos.phantom.iteratee.Iteratee
-import com.websudos.phantom.keys.{PartitionKey, PrimaryKey}
+import com.websudos.phantom.keys.PartitionKey
 import conf.connection.DataConnection
 import domain.Token
-import views.html.helper.select
 
 import scala.concurrent.Future
-import scala.concurrent.duration._
 /**
  * Created by hashcode on 2015/06/09.
  */
