@@ -6,6 +6,7 @@ import repository.EditedContentRepository
 
 import scala.concurrent.Future
 
+
 /**
   * Created by hashcode on 2016/02/11.
   */
