@@ -3,6 +3,7 @@ package conf.util
 import java.util.Date
 
 import org.joda.time.{DateTime, DateTimeConstants}
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 import scala.util.{Failure, Success, Try}
 
@@ -45,6 +46,10 @@ object Util extends Enumeration {
       case Success(ans) => ans
       case Failure(ex) => 0
     }
+  }
+
+  def encode(name:String) ={
+    new BCryptPasswordEncoder().encode(name)
   }
 
 

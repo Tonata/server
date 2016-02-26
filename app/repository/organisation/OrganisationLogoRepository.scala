@@ -2,19 +2,21 @@ package repository.organisation
 
 import com.datastax.driver.core.Row
 import com.websudos.phantom.CassandraTable
+import com.websudos.phantom.dsl._
 import com.websudos.phantom.iteratee.Iteratee
 import com.websudos.phantom.keys.PartitionKey
 import conf.connection.DataConnection
+import domain.organisation.OrganisationLogo
 
 import scala.concurrent.Future
 
 /**
  * Created by hashcode on 2016/01/03.
  */
-class CompanyLogoRepository extends CassandraTable[CompanyLogoRepository, CompanyLogo] {
+class OrganisationLogoRepository extends CassandraTable[OrganisationLogoRepository, OrganisationLogo] {
 
 
-  object company extends StringColumn(this) with PartitionKey[String]
+  object org extends StringColumn(this) with PartitionKey[String]
 
   object id extends StringColumn(this) with PrimaryKey[String]
 
@@ -28,9 +30,9 @@ class CompanyLogoRepository extends CassandraTable[CompanyLogoRepository, Compan
 
   object date extends DateColumn(this)
 
-  override def fromRow(r: Row): CompanyLogo = {
-    CompanyLogo(
-      company(r),
+  override def fromRow(r: Row): OrganisationLogo = {
+    OrganisationLogo(
+      org(r),
       id(r),
       url(r),
       size(r),
@@ -40,16 +42,16 @@ class CompanyLogoRepository extends CassandraTable[CompanyLogoRepository, Compan
   }
 }
 
-object CompanyLogoRepository extends CompanyLogoRepository with RootConnector {
-  override lazy val tableName = "clogos"
+object OrganisationLogoRepository extends OrganisationLogoRepository with RootConnector {
+  override lazy val tableName = "orglogos"
 
   override implicit def space: KeySpace = DataConnection.keySpace
 
   override implicit def session: Session = DataConnection.session
 
-  def save(dept: CompanyLogo) = {
+  def save(dept: OrganisationLogo) = {
     insert
-      .value(_.company, dept.company)
+      .value(_.org, dept.org)
       .value(_.id, dept.id)
       .value(_.url, dept.url)
       .value(_.size, dept.size)
@@ -59,11 +61,11 @@ object CompanyLogoRepository extends CompanyLogoRepository with RootConnector {
       .future()
   }
 
-  def findDCompanyLogo(company: String, id: String): Future[Option[CompanyLogo]] = {
-    select.where(_.company eqs company).and(_.id eqs id).one()
+  def findDCompanyLogo(org: String, id: String): Future[Option[OrganisationLogo]] = {
+    select.where(_.org eqs org).and(_.id eqs id).one()
   }
 
-  def findCompanyLogos(company: String): Future[Seq[CompanyLogo]] = {
-    select.where(_.company eqs company) fetchEnumerator() run Iteratee.collect()
+  def findCompanyLogos(org: String): Future[Seq[OrganisationLogo]] = {
+    select.where(_.org eqs org) fetchEnumerator() run Iteratee.collect()
   }
 }

@@ -2,9 +2,11 @@ package repository.organisation
 
 import com.datastax.driver.core.Row
 import com.websudos.phantom.CassandraTable
+import com.websudos.phantom.dsl._
 import com.websudos.phantom.iteratee.Iteratee
 import com.websudos.phantom.keys.PartitionKey
 import conf.connection.DataConnection
+import domain.organisation.Location
 
 import scala.concurrent.Future
 
@@ -15,23 +17,31 @@ import scala.concurrent.Future
   */
 
 
-class LocationRepository extends CassandraTable[LocationRepository,Location]{
-  object company extends StringColumn(this) with PartitionKey[String]
+class LocationRepository extends CassandraTable[LocationRepository, Location] {
+
+  object org extends StringColumn(this) with PartitionKey[String]
+
   object id extends StringColumn(this) with PrimaryKey[String]
+
   object name extends StringColumn(this)
+
   object locationTypeId extends StringColumn(this)
+
   object code extends StringColumn(this)
 
   object latitude extends StringColumn(this)
+
   object longitude extends StringColumn(this)
+
   object parentId extends StringColumn(this)
 
   object state extends StringColumn(this)
+
   object date extends DateColumn(this)
 
   override def fromRow(r: Row): Location = {
     Location(
-      company(r),
+      org(r),
       id(r),
       name(r),
       locationTypeId(r),
@@ -54,7 +64,7 @@ object LocationRepository extends LocationRepository with RootConnector {
 
   def save(location: Location): Future[ResultSet] = {
     insert
-      .value(_.company, location.company)
+      .value(_.org, location.org)
       .value(_.id, location.id)
       .value(_.name, location.name)
       .value(_.locationTypeId, location.locationTypeId)
@@ -67,14 +77,15 @@ object LocationRepository extends LocationRepository with RootConnector {
       .future()
   }
 
-  def findById(company:String, id: String):Future[Option[Location]] = {
-    select.where(_.company eqs company).and(_.id eqs id).one()
+  def findById(org: String, id: String): Future[Option[Location]] = {
+    select.where(_.org eqs org).and(_.id eqs id).one()
   }
-  def findAll(company:String) : Future[Seq[Location]] = {
+
+  def findAll(company: String): Future[Seq[Location]] = {
     select.fetchEnumerator() run Iteratee.collect()
   }
 
-  def deleteById(id:String): Future[ResultSet] = {
+  def deleteById(id: String): Future[ResultSet] = {
     delete.where(_.id eqs id).future()
   }
 }

@@ -1,7 +1,7 @@
 package service.organisation
 
 import com.datastax.driver.core.ResultSet
-import repository.organisation.CompanyLogoRepository
+import repository.organisation.OrganisationLogoRepository
 
 import scala.concurrent.Future
 
@@ -11,15 +11,15 @@ import scala.concurrent.Future
 object CompanyLogoServices {
 
   def SaveOrUpdate(company: CompanyLogo): Future[ResultSet] = {
-    CompanyLogoRepository.save(company)
+    OrganisationLogoRepository.save(company)
   }
 
   def findDCompanyLogo(company: String, id: String): Future[Option[CompanyLogo]] = {
-    CompanyLogoRepository.findDCompanyLogo(company, id)
+    OrganisationLogoRepository.findDCompanyLogo(company, id)
   }
 
   def findCompanyLogos(company: String): Future[Seq[CompanyLogo]] = {
-    CompanyLogoRepository.findCompanyLogos(company)
+    OrganisationLogoRepository.findCompanyLogos(company)
   }
 
 }

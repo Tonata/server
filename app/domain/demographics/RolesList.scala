@@ -11,4 +11,6 @@ object RolesList {
   def ROLE_PUBLISHER: String = "ROLE_PUBLISHER"
 
   def ORG_ADMIN: String = "Business Technical Administrator"
+
+  def ADMIN: String = "System Administrator"
   }

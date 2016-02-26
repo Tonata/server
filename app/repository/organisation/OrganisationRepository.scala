@@ -1,9 +1,11 @@
 package repository.organisation
 
 import com.websudos.phantom.CassandraTable
+import com.websudos.phantom.dsl._
 import com.websudos.phantom.iteratee.Iteratee
 import com.websudos.phantom.keys.PartitionKey
 import conf.connection.DataConnection
+import domain.organisation.Organisation
 
 import scala.concurrent.Future
 
@@ -14,13 +16,13 @@ import scala.concurrent.Future
 
 
 
-sealed class CompanyRepository extends CassandraTable[CompanyRepository, Company] {
+sealed class OrganisationRepository extends CassandraTable[OrganisationRepository, Organisation] {
 
   object id extends StringColumn(this) with PartitionKey[String]
 
   object name extends StringColumn(this)
 
-  object details extends MapColumn[CompanyRepository, Company, String, String](this)
+  object details extends MapColumn[OrganisationRepository, Organisation, String, String](this)
 
   object adminattached extends StringColumn(this)
 
@@ -29,8 +31,8 @@ sealed class CompanyRepository extends CassandraTable[CompanyRepository, Company
 
   object state extends StringColumn(this)
 
-  override def fromRow(r: Row): Company = {
-    Company(
+  override def fromRow(r: Row): Organisation = {
+    Organisation(
       id(r),
       name(r),
       details(r),
@@ -41,14 +43,14 @@ sealed class CompanyRepository extends CassandraTable[CompanyRepository, Company
   }
 }
 
-object CompanyRepository extends CompanyRepository with RootConnector {
+object OrganisationRepository extends OrganisationRepository with RootConnector {
   override lazy val tableName = "company"
 
   override implicit def space: KeySpace = DataConnection.keySpace
 
   override implicit def session: Session = DataConnection.session
 
-  def save(company: Company) = {
+  def save(company: Organisation) = {
     insert
       .value(_.id, company.id)
       .value(_.name, company.name)
@@ -59,7 +61,7 @@ object CompanyRepository extends CompanyRepository with RootConnector {
       .future()
   }
 
-  def updateCompany(company:Company):Future[ResultSet] ={
+  def updateCompany(company:Organisation):Future[ResultSet] ={
     update.where(_.id eqs company.id)
       .modify(_.name setTo  company.name)
       .and(_.details setTo company.details)
@@ -73,7 +75,7 @@ object CompanyRepository extends CompanyRepository with RootConnector {
     select.where(_.id eqs id).one()
   }
 
-  def findAll: Future[Seq[Company]] = {
+  def findAll: Future[Seq[Organisation]] = {
     select.fetchEnumerator() run Iteratee.collect()
   }
 
