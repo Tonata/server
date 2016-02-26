@@ -1,10 +1,10 @@
 package controllers
 
-import domain.ContentType
+import domain.content.ContentType
 import model.ContentTypeModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import service.ContentTypeService
+import service.content.ContentTypeService
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**

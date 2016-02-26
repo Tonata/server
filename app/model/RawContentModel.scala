@@ -3,7 +3,8 @@ package model
 import java.util.{UUID, Date}
 
 import conf.util.Util
-import domain.{Content, RawContent, EditedContent}
+import domain.Content
+import domain.content.RawContent
 import play.api.libs.json.Json
 
 /**

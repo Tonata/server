@@ -1,12 +1,11 @@
 package controllers
 
 import java.text.SimpleDateFormat
-
-import domain.FileMeta
+import domain.storage.FileMeta
 import play.api.libs.iteratee.Enumerator
 import play.api.libs.json.Json
 import play.api.mvc._
-import service.{FileServices, FileTypeService}
+import service.storage.{FileTypeService, FileServices}
 
 import scala.concurrent.Future
 

@@ -1,10 +1,10 @@
 package controllers
 
-import domain.EditedContent
+import domain.content.EditedContent
 import model.EditedContentModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import service.EditedContentService
+import service.content.EditedContentService
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**

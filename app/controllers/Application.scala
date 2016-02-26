@@ -1,7 +1,7 @@
 package controllers
 
 import play.api.mvc._
-import service.TokenService
+import service.util.TokenService
 
 class Application extends Controller {
   val token = TokenService()

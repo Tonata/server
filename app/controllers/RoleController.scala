@@ -1,10 +1,10 @@
 package controllers
 
-import domain.Role
+import domain.demographics.Role
 import model.RoleModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import service.RoleService
+import service.demographics.RoleService
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**

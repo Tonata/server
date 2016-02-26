@@ -1,7 +1,8 @@
 package service
 
-import domain.Category
+import domain.content.Category
 import org.scalatest.{GivenWhenThen, FeatureSpec}
+import service.content.CategoryService
 
 /**
  * Created by hashcode on 2015/07/27.

@@ -1,10 +1,10 @@
 package controllers
 
-import domain.PublishedContent
+import domain.content.PublishedContent
 import model.PublishedContentModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import service.PublishedContentService
+import service.content.PublishedContentService
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**

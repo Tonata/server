@@ -3,7 +3,7 @@ package model
 import java.util.UUID
 
 import conf.util.Util
-import domain.Source
+import domain.content.Source
 import play.api.libs.json.Json
 
 /**

@@ -2,6 +2,9 @@ package controllers
 
 import play.api.mvc.{Action, Controller}
 import repository._
+import repository.content._
+import repository.demographics.RoleRepository
+import repository.util.{TokenRepository, KeysRepository}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
