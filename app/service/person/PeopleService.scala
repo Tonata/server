@@ -1,6 +1,8 @@
 package service.person
 
 import com.datastax.driver.core.ResultSet
+import domain.person.Person
+import service.Service
 
 import scala.concurrent.Future
 
