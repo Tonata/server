@@ -2,6 +2,7 @@ package service.person
 
 import com.datastax.driver.core.ResultSet
 import domain.person.Person
+import repository.person.{UsersRepository, PersonRepository}
 import service.Service
 
 import scala.concurrent.Future
@@ -12,6 +13,7 @@ import scala.concurrent.Future
 object PeopleService extends Service{
 
   def saveOrUpdate(entity: Person): Future[ResultSet] = {
+
     PersonRepository.save(entity)
   }
   def getPeople(id:String):Future[Seq[Person]] ={

@@ -1,5 +1,9 @@
 package service.person
 
+import com.datastax.driver.core.ResultSet
+import domain.person.PersonImages
+import repository.person.PersonImagesRepository
+
 import scala.concurrent.Future
 
 /**
