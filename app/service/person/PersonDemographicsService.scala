@@ -15,7 +15,7 @@ object PersonDemographicsService extends Service{
     PersonDemographicsRepository.save(entity)
   }
 
-  
+
   def getValues(personId: String): Future[Seq[PersonDemographics]] = {
     PersonDemographicsRepository.findPersonDemographics(personId)
   }

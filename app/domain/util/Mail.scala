@@ -7,7 +7,7 @@ import play.api.libs.json.Json
 /**
  * Created by hashcode on 2015/11/28.
  */
-case class Mail(
+case class Mail( orgId:String,
                  id:String,
                  key:String,
                  value:String,
