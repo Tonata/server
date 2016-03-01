@@ -43,7 +43,13 @@ object FileServices {
           Some("Standard"),
           meta.contentType)
 
-        Seq[FileResults](normalImageMetaData, thumbnailImageMetaData)
+        val originalId = FilesRepository.save(new FileInputStream(data), meta)
+        val originalMetaData = FileResults(originalId.toString,
+          "/api/static/" + originalId.toString+"/"+getFileName(originalId.toString),
+          Some("Original"),
+          meta.contentType)
+
+        Seq[FileResults](normalImageMetaData, thumbnailImageMetaData,originalMetaData)
       }
       case false => Future {
         val fileId = FilesRepository.save(new FileInputStream(data), meta)

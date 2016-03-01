@@ -29,8 +29,6 @@ object AccountSetupService extends Service {
       result2 <- repo.save(editor)
       result3 <- repo.save(publisher)
       result4 <- repo.save(orgadmin)
-
-
     } yield result1
 
   }
@@ -60,7 +58,5 @@ object AccountSetupService extends Service {
       pr <- rrepo.save(personrole)
     }
       yield pr
-
   }
-
 }

@@ -1,6 +1,9 @@
 package service.organisation
 
 import com.websudos.phantom.dsl._
+import domain.organisation.Location
+import repository.organisation.LocationRepository
+import service.Service
 
 import scala.concurrent.Future
 

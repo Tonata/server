@@ -20,8 +20,8 @@ object PeopleService extends Service{
     PersonRepository.findPeople(id)
   }
 
-  def getPerson(company:String,id:String):Future[Option[Person]] ={
-    PersonRepository.findPerson(company,id)
+  def getPerson(entity:String,id:String):Future[Option[Person]] ={
+    PersonRepository.findPerson(entity,id)
   }
   def getPersonByEmail(email:String):Future[Option[Person]] = {
     UsersRepository.findByEmail(email)

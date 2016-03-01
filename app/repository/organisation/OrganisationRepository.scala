@@ -44,7 +44,7 @@ sealed class OrganisationRepository extends CassandraTable[OrganisationRepositor
 }
 
 object OrganisationRepository extends OrganisationRepository with RootConnector {
-  override lazy val tableName = "company"
+  override lazy val tableName = "organisation"
 
   override implicit def space: KeySpace = DataConnection.keySpace
 

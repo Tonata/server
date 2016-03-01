@@ -29,12 +29,9 @@ object SchemaSetUpService extends Service {
     title <- StatusRepository.create.ifNotExists().future()
     preole <- PersonRoleRepository.create.ifNotExists().future()
 
-
     //location
     race <- RaceRepository.create.ifNotExists().future()
     role <- RoleRepository.create.ifNotExists().future()
-
-
 
     //util
     status <- StatusRepository.create.ifNotExists().future()

@@ -1,6 +1,9 @@
 package service.storage
 
+import com.datastax.driver.core.ResultSet
 import domain.storage.StorageUrl
+import repository.storage.StorageUrlRepository
+import service.Service
 
 import scala.concurrent.Future
 
