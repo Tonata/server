@@ -19,7 +19,7 @@ class PeopleController extends Controller {
         Ok(Json.toJson(entity)))
   }
 
-  def getCompanyPeople(id: String) = Action.async {
+  def getOrganisationPeople(id: String) = Action.async {
     request =>
       PeopleService.getPeople(id) map (result =>
         Ok(Json.toJson(result)))

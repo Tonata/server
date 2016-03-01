@@ -3,101 +3,184 @@
 # ~~~~
 
 # Home page
-GET         /                                @controllers.Application.index
-GET         /setup                           @controllers.SetUpController.dbsetup
-
-# Address and Contact API
-POST        /api/address/create              @controllers.AddressController.createAddress
-POST        /api/contact/create              @controllers.AddressController.createContact
-GET         /api/address/get/:id             @controllers.AddressController.getAddress(id)
-GET         /api/contact/get/:id             @controllers.AddressController.getContact(id)
-
-
+GET         /                                           @controllers.Application.index
+GET         /setup                                      @controllers.Application.setup
 
 # Category API
-POST        /api/cat/create                  @controllers.CategoryController.create
-GET         /api/cat/:id                     @controllers.CategoryController.getCategory(id)
-PUT         /api/cat/update                  @controllers.CategoryController.update
-GET         /api/cat/get/cats                @controllers.CategoryController.getAll
+POST        /api/cat/create                             @controllers.content.CategoryController.create
+GET         /api/cat/:id                                @controllers.content.CategoryController.getCategory(id)
+PUT         /api/cat/update                             @controllers.content.CategoryController.update
+GET         /api/cat/get/cats                           @controllers.content.CategoryController.getAll
 
 
-# Content API
-
-POST        /api/cont/create                 @controllers.ContentController.create
-GET         /api/cont/:id                    @controllers.ContentController.getContent(id)
-PUT         /api/cont/update                 @controllers.ContentController.update
-GET         /api/cont/get/conts              @controllers.ContentController.getAll
-GET         /api/cont/edited/:id             @controllers.ContentController.isEditedAndPlublished(id)
-GET         /api/cont/published/:id          @controllers.ContentController.isPlublished(id)
-GET         /api/cont/related/:id            @controllers.ContentController.getRelatedContent(id)
-GET         /api/cont/bycat/:id/:num         @controllers.ContentController.getContentByCategory(id,num)
-GET         /api/cont/bytype/:id/:num        @controllers.ContentController.getContentByTypeId(id,num)
 
 # Raw
 
-POST        /api/cont/raw/create             @controllers.RawContentController.create
-GET         /api/cont/raw/:id                @controllers.RawContentController.getContent(id)
-PUT         /api/cont/raw/update             @controllers.RawContentController.update
-GET         /api/cont/raw/get/conts          @controllers.RawContentController.getAll
+POST        /api/cont/raw/create                        @controllers.content.RawContentController.create
+GET         /api/cont/raw/:orgId/:id                    @controllers.content.RawContentController.getContentById(orgId,id)
+PUT         /api/cont/raw/update                        @controllers.content.RawContentController.update
+GET         /api/cont/raw/get/conts/:orgId              @controllers.content.RawContentController.getAll(orgId)
 
 # Edited
 
-POST        /api/cont/ed/create              @controllers.EditedContentController.create
-GET         /api/cont/ed//:id                @controllers.EditedContentController.getContent(id)
-PUT         /api/cont/ed/update              @controllers.EditedContentController.update
-GET         /api/cont/ed/get/conts           @controllers.EditedContentController.getAll
+POST        /api/cont/ed/create                         @controllers.content.EditedContentController.create
+GET         /api/cont/ed/:orgId/:id                     @controllers.content.EditedContentController.getContentById(orgId,id)
+PUT         /api/cont/ed/update                         @controllers.content.EditedContentController.update
+GET         /api/cont/ed/get/conts/:orgId               @controllers.content.EditedContentController.getAll(orgId)
 
 # Published
 
-POST        /api/cont/pub/create             @controllers.PublishedContentController.create
-GET         /api/cont/pub/:id                @controllers.PublishedContentController.getContent(id)
-PUT         /api/cont/pub/update             @controllers.PublishedContentController.update
-GET         /api/cont/pub/get/conts          @controllers.PublishedContentController.getAll
+POST        /api/cont/pub/create                        @controllers.content.PublishedContentController.create
+GET         /api/cont/pub/:orgId/:id                    @controllers.content.PublishedContentController.getContentById(orgId,id)
+PUT         /api/cont/pub/update                        @controllers.content.PublishedContentController.update
+GET         /api/cont/pub/get/conts/:orgId              @controllers.content.PublishedContentController.getAll(orgId)
+
+#Source API
+
+POST        /api/src/create                             @controllers.content.SourceController.create
+GET         /api/src/:orgId/:id                         @controllers.content.SourceController.getSource(orgId,id)
+PUT         /api/src/update                             @controllers.content.SourceController.update
+GET         /api/src/get/srcs/:orgId                    @controllers.content.SourceController.getAll(orgId)
 
 #Media
 
-POST        /api/media/create                @controllers.MediaController.create
-GET         /api/media/:contentId/:id        @controllers.MediaController.getContent(contentId,id)
-PUT         /api/media/update                @controllers.MediaController.update
-GET         /api/media/get/:contentId        @controllers.MediaController.getAll(contentId)
+POST        /api/media/create                           @controllers.content.MediaController.create
+GET         /api/media/:contentId/:id                   @controllers.content.MediaController.getContent(contentId,id)
+PUT         /api/media/update                           @controllers.content.MediaController.update
+GET         /api/media/get/:contentId                   @controllers.content.MediaController.getAll(contentId)
 
 
 # ContentType API
 
-POST        /api/ctype/create                @controllers.ContntTypeController.create
-GET         /api/ctype/:id                   @controllers.ContntTypeController.getContentType(id)
-PUT         /api/ctype/update                @controllers.ContntTypeController.update
-GET         /api/ctype/get/ctypes            @controllers.ContntTypeController.getAll
+POST        /api/ctype/create                           @controllers.content.ContentTypeController.create
+GET         /api/ctype/:id                              @controllers.content.ContentTypeController.getContentType(id)
+PUT         /api/ctype/update                           @controllers.content.ContentTypeController.update
+GET         /api/ctype/get/ctypes                       @controllers.content.ContentTypeController.getAll
 
 #Media Upload and Read End Point
-POST        /api/upload                      @controllers.FilesController.upload
-GET         /api/static/:id/:filename        @controllers.FilesController.getFile(id,filename)
+POST        /api/upload                                 @controllers.storage.FilesController.upload
+GET         /api/static/:id/:filename                   @controllers.storage.FilesController.getFile(id,filename)
+
+# Person  API
+
+# Person
+POST        /api/people/post                            @controllers.person.PeopleController.createOrUpdate
+GET         /api/people/get/:org/:id                    @controllers.person.PeopleController.getPerson(org,id)
+GET         /api/peoples/:org                           @controllers.person.PeopleController.getOrganisationPeople(org)
+GET         /api/people/email/:email                    @controllers.person.PeopleController.getPersonByEmail(email)
+
+POST        /api/prole/post                             @controllers.person.PersonRoleController.createOrUpdate
+GET         /api/prole/get/:id/:roleId                  @controllers.person.PersonRoleController.getById(id,roleId)
+GET         /api/proles/:personId                       @controllers.person.PersonRoleController.getAllPersonRoles(personId)
+#1
+POST        /api/paddr/post                             @controllers.person.PersonAddressController.createOrUpdate
+GET         /api/paddr/get/:personId/:id                @controllers.person.PersonAddressController.getById(personId,id)
+GET         /api/paddrs/:personId                       @controllers.person.PersonAddressController.getAllValues(personId)
+
+POST        /api/pcont/post                             @controllers.person.PersonContactController.createOrUpdate
+GET         /api/pcont/get/:personId/:id                @controllers.person.PersonContactController.getById(personId,id)
+GET         /api/pconts/:personId                       @controllers.person.PersonContactController.getAllValues(personId)
+
+POST        /api/pimage/post                            @controllers.person.PersonImagesController.createOrUpdate
+GET         /api/pimage/get/:org/:personId/:id          @controllers.person.PersonImagesController.getPersonImage(org,personId,id)
+GET         /api/pimages/get/:org/:personId             @controllers.person.PersonImagesController.getPersonImages(org,personId)
+GET         /api/pcimages/get/:org                      @controllers.person.PersonImagesController.getCompanyPeopleImages(org)
+
+POST        /api/plang/post                             @controllers.person.PersonLanguageController.createOrUpdate
+GET         /api/plang/get/:personId/:id                @controllers.person.PersonLanguageController.getById(personId,id)
+GET         /api/plangs/:personId                       @controllers.person.PersonLanguageController.getAllValues(personId)
 
 
-# Role API
+POST        /api/pdemo/post                             @controllers.person.PersonDemographicsController.createOrUpdate
+GET         /api/pdemo/get/:personId/:id                @controllers.person.PersonDemographicsController.getById(personId,id)
+GET         /api/pdemos/:personId                       @controllers.person.PersonDemographicsController.getAllValues(personId)
 
-POST        /api/role/create                 @controllers.RoleController.create
-GET         /api/role/:id                    @controllers.RoleController.getRole(id)
-PUT         /api/role/update                 @controllers.RoleController.update
-GET         /api/role/get/roles              @controllers.RoleController.getAll
+POST        /api/paddr/post                             @controllers.person.PersonAddressController.createOrUpdate
+GET         /api/paddr/get/:personId/:id                @controllers.person.PersonAddressController.getById(personId,id)
+GET         /api/paddrs/:personId                       @controllers.person.PersonAddressController.getAllValues(personId)
+
+POST        /api/pcont/post                             @controllers.person.PersonContactController.createOrUpdate
+GET         /api/pcont/get/:personId/:id                @controllers.person.PersonContactController.getById(personId,id)
+GET         /api/pconts/:personId                       @controllers.person.PersonContactController.getAllValues(personId)
+
+# Location API
+POST        /api/location/post                          @controllers.organisation.LocationController.createOrUpdate
+GET         /api/location/get/:orgId/:id                @controllers.organisation.LocationController.getById(orgId,id)
+GET         /api/locations/:orgId                       @controllers.organisation.LocationController.getAllLocations(orgId)
 
 
-#Source API
+#Organisation API
 
-POST        /api/src/create                  @controllers.SourceController.create
-GET         /api/src/:id                     @controllers.SourceController.getSource(id)
-PUT         /api/src/update                  @controllers.SourceController.update
-GET         /api/src/get/srcs                @controllers.SourceController.getAll
 
-# User API
+POST        /api/organisationlogo/post                  @controllers.organisation.OrganisationLogoController.createOrUpdate
+GET         /api/organisationlogo/get/:orgId/:id        @controllers.organisation.OrganisationLogoController.getOrganisationLogo(orgId,id)
+GET         /api/organisationlogo/get/:orgId            @controllers.organisation.OrganisationLogoController.getAllOrganisationLogos(orgId)
 
-POST        /api/user/create                 @controllers.UserController.create
-GET         /api/user/:id                    @controllers.UserController.getUser(id)
-PUT         /api/user/update                 @controllers.UserController.update
-GET         /api/user/get/users              @controllers.UserController.getAll
+
+
+# Demgraphics
+## Gender
+POST        /api/demographics/gender/post               @controllers.demographics.GenderController.createOrUpdate
+GET         /api/demographics/gender/get/:id            @controllers.demographics.GenderController.getById(id)
+GET         /api/demographics/genders/get               @controllers.demographics.GenderController.getAll
+
+
+## Language
+POST        /api/demographics/language/post             @controllers.demographics.LanguageController.createOrUpdate
+GET         /api/demographics/language/get/:id          @controllers.demographics.LanguageController.getById(id)
+GET         /api/demographics/languages/get             @controllers.demographics.LanguageController.getAll
+
+## LanguageProficiency
+POST        /api/demographics/languagep/post            @controllers.demographics.LanguageProficiencyController.createOrUpdate
+GET         /api/demographics/languagep/get/:id         @controllers.demographics.LanguageProficiencyController.getById(id)
+GET         /api/demographics/languageps/get            @controllers.demographics.LanguageProficiencyController.getAll
+
+
+# Race
+POST        /api/demographics/race/post                 @controllers.demographics.RaceController.createOrUpdate
+GET         /api/demographics/race/get/:id              @controllers.demographics.RaceController.getById(id)
+GET         /api/demographics/races/get                 @controllers.demographics.RaceController.getAll
+
+# Roles
+POST        /api/demographics/role/post                 @controllers.demographics.RoleController.create
+GET         /api/demographics/role/get/:id              @controllers.demographics.RoleController.getRole(id)
+GET         /api/demographics/roles/get                 @controllers.demographics.RoleController.getAll
+
+
+
+#Location
+POST        /api/location/addresstype/post              @controllers.location.AddressTypeController.createOrUpdate
+GET         /api/location/addresstype/get/:id           @controllers.location.AddressTypeController.getById(id)
+GET         /api/location/addresstypes/get              @controllers.location.AddressTypeController.getAll
+
+
+POST        /api/location/contacttype/post              @controllers.location.ContactTypeController.createOrUpdate
+GET         /api/location/contacttype/get/:id           @controllers.location.ContactTypeController.getById(id)
+GET         /api/location/contacttypes/get              @controllers.location.ContactTypeController.getAll
+
+
+POST        /api/location/locationtype/post             @controllers.location.LocationTypeController.createOrUpdate
+GET         /api/location/locationtype/get/:id          @controllers.location.LocationTypeController.getById(id)
+GET         /api/location/locationtypes/get             @controllers.location.LocationTypeController.getAll
+
+
+#Storage
+POST        /api/util/storageurl/post                   @controllers.storage.StorageUrlController.createOrUpdate
+GET         /api/util/storageurl/get/:id                @controllers.storage.StorageUrlController.getById(id)
+GET         /api/util/storageurls/get                   @controllers.storage.StorageUrlController.getAllLinks
+
+POST        /api/util/status/post                       @controllers.util.StatusController.createOrUpdate
+GET         /api/util/status/get/:id                    @controllers.util.StatusController.getById(id)
+GET         /api/util/statuses/get                      @controllers.util.StatusController.getAll
+
+POST        /api/util/mail/post                         @controllers.util.MailController.createOrUpdate
+GET         /api/util/mail/get/:id                      @controllers.util.MailController.getById(id)
+GET         /api/util/mails/get                         @controllers.util.MailController.getAll
+
+
 
 
 
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                               controllers.Assets.versioned(path="/public", file: Asset)

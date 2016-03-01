@@ -1,4 +1,4 @@
-package controllers.location
+package controllers.organisation
 
 import domain.organisation.Location
 import play.api.libs.json.Json
@@ -24,7 +24,7 @@ class LocationController extends Controller {
         Ok(Json.toJson(result)))
   }
 
-  def getAllDepartments(org:String) = Action.async {
+  def getAllLocations(org:String) = Action.async {
     request =>
       LocationService.findAll(org) map (result =>
         Ok(Json.toJson(result)))
