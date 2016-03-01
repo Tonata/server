@@ -12,8 +12,6 @@ GET         /api/cat/:id                                @controllers.content.Cat
 PUT         /api/cat/update                             @controllers.content.CategoryController.update
 GET         /api/cat/get/cats                           @controllers.content.CategoryController.getAll
 
-
-
 # Raw
 
 POST        /api/cont/raw/create                        @controllers.content.RawContentController.create
@@ -95,13 +93,6 @@ POST        /api/pdemo/post                             @controllers.person.Pers
 GET         /api/pdemo/get/:personId/:id                @controllers.person.PersonDemographicsController.getById(personId,id)
 GET         /api/pdemos/:personId                       @controllers.person.PersonDemographicsController.getAllValues(personId)
 
-POST        /api/paddr/post                             @controllers.person.PersonAddressController.createOrUpdate
-GET         /api/paddr/get/:personId/:id                @controllers.person.PersonAddressController.getById(personId,id)
-GET         /api/paddrs/:personId                       @controllers.person.PersonAddressController.getAllValues(personId)
-
-POST        /api/pcont/post                             @controllers.person.PersonContactController.createOrUpdate
-GET         /api/pcont/get/:personId/:id                @controllers.person.PersonContactController.getById(personId,id)
-GET         /api/pconts/:personId                       @controllers.person.PersonContactController.getAllValues(personId)
 
 # Location API
 POST        /api/location/post                          @controllers.organisation.LocationController.createOrUpdate
