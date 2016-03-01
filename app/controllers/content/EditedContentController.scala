@@ -1,16 +1,18 @@
-package controllers
+package controllers.content
 
 import domain.content.EditedContent
 import model.EditedContentModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.EditedContentService
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by hashcode on 2016/02/11.
   */
 class EditedContentController extends Controller{
+
   def create = Action.async(parse.json) {
     request =>
       val input = request.body
@@ -20,13 +22,17 @@ class EditedContentController extends Controller{
       results map(result =>Ok(Json.toJson(content)))
   }
 
-  def getAll = Action.async {
+  def getAll(org:String) = Action.async {
     request =>
-      EditedContentService.getAllContent map (contents => Ok(Json.toJson(contents)))
+      EditedContentService.getAllContents(org) map (contents => Ok(Json.toJson(contents)))
   }
 
-  def getContent(id: String) = Action.async {
-    EditedContentService.getContent(id) map (content => Ok(Json.toJson(content)))
+  def getContentById(org:String, id:String) = Action.async {
+    EditedContentService.getContentById(org,id) map (content => Ok(Json.toJson(content)))
+  }
+
+  def getContents(org: String,initV:Int) = Action.async {
+    EditedContentService.getContents(org,initV.toInt) map (content => Ok(Json.toJson(content)))
   }
 
   def update = Action.async(parse.json) {
@@ -36,5 +42,4 @@ class EditedContentController extends Controller{
       val results = EditedContentService.create(category)
       results map(result =>Ok(Json.toJson(category)))
   }
-
 }

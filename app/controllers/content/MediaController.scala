@@ -1,10 +1,11 @@
-package controllers
+package controllers.content
 
 import domain.content.Media
 import model.MediaModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.MediaService
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**

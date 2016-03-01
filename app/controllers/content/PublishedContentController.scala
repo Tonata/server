@@ -1,16 +1,18 @@
-package controllers
+package controllers.content
 
-import domain.content.PublishedContent
-import model.PublishedContentModel
+import domain.content.{EditedContent, PublishedContent}
+import model.{EditedContentModel, PublishedContentModel}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
-import service.content.PublishedContentService
+import service.content.{EditedContentService, PublishedContentService}
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by hashcode on 2016/02/11.
   */
 class PublishedContentController extends Controller{
+
   def create = Action.async(parse.json) {
     request =>
       val input = request.body
@@ -20,13 +22,17 @@ class PublishedContentController extends Controller{
       results map(result =>Ok(Json.toJson(content)))
   }
 
-  def getAll = Action.async {
+  def getAll(org:String) = Action.async {
     request =>
-      PublishedContentService.getAllContent map (contents => Ok(Json.toJson(contents)))
+      PublishedContentService.getAllContents(org) map (contents => Ok(Json.toJson(contents)))
   }
 
-  def getContent(id: String) = Action.async {
-    PublishedContentService.getContent(id) map (content => Ok(Json.toJson(content)))
+  def getContentById(org:String, id:String) = Action.async {
+    PublishedContentService.getContentById(org,id) map (content => Ok(Json.toJson(content)))
+  }
+
+  def getContents(org: String,initV:Int) = Action.async {
+    PublishedContentService.getContents(org,initV.toInt) map (content => Ok(Json.toJson(content)))
   }
 
   def update = Action.async(parse.json) {
@@ -36,6 +42,4 @@ class PublishedContentController extends Controller{
       val results = PublishedContentService.create(category)
       results map(result =>Ok(Json.toJson(category)))
   }
-
-
 }

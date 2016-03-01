@@ -1,10 +1,11 @@
-package controllers
+package controllers.content
 
 import domain.content.Source
 import model.SourceModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.SourceService
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
@@ -22,13 +23,13 @@ class SourceController extends Controller{
       results map(result =>Ok(Json.toJson(source)))
   }
 
-  def getAll = Action.async {
+  def getAll(org:String) = Action.async {
     request =>
-      service.getSources map (sources => Ok(Json.toJson(sources)))
+      service.getSources(org) map (sources => Ok(Json.toJson(sources)))
   }
 
-  def getSource(id: String) = Action.async {
-    service.getSource(id) map (source => Ok(Json.toJson(source)))
+  def getSource(org:String, id: String) = Action.async {
+    service.getSource(org,id) map (source => Ok(Json.toJson(source)))
   }
 
   def update = Action.async(parse.json) {

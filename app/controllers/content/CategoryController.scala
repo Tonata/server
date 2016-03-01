@@ -1,10 +1,11 @@
-package controllers
+package controllers.content
 
 import domain.content.Category
 import model.CategoryModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.CategoryService
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**

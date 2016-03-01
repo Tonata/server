@@ -1,16 +1,17 @@
-package controllers
+package controllers.content
 
 import domain.content.ContentType
 import model.ContentTypeModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.ContentTypeService
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by hashcode on 2015/06/28.
  */
-class ContntTypeController extends Controller{
+class ContentTypeController extends Controller{
   val service = ContentTypeService()
 
   def create = Action.async(parse.json) {
