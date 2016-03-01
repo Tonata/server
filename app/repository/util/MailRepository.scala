@@ -11,13 +11,15 @@ import domain.util.Mail
 import scala.concurrent.Future
 
 /**
- * Created by hashcode on 2015/11/28.
- */
+  * Created by hashcode on 2015/11/28.
+  */
 
 
 class MailRepository extends CassandraTable[MailRepository, Mail] {
 
-  object id extends StringColumn(this) with PartitionKey[String]
+  object orgId extends StringColumn(this) with PartitionKey[String]
+
+  object id extends StringColumn(this) with PrimaryKey[String]
 
   object key extends StringColumn(this)
 
@@ -32,7 +34,7 @@ class MailRepository extends CassandraTable[MailRepository, Mail] {
   object date extends DateColumn(this)
 
   override def fromRow(r: Row): Mail = {
-    Mail(id(r), key(r), value(r), host(r), port(r),state(r),date(r))
+    Mail(orgId(r), id(r), key(r), value(r), host(r), port(r), state(r), date(r))
   }
 }
 
@@ -45,6 +47,7 @@ object MailRepository extends MailRepository with RootConnector {
 
   def save(mail: Mail): Future[ResultSet] = {
     insert
+      .value(_.orgId, mail.orgId)
       .value(_.id, mail.id)
       .value(_.key, mail.key)
       .value(_.value, mail.value)
@@ -55,13 +58,12 @@ object MailRepository extends MailRepository with RootConnector {
       .future()
   }
 
-  def findById(id: String): Future[Option[Mail]] = {
-    select.where(_.id eqs id).one()
+  def findById(orgId:String, id: String): Future[Option[Mail]] = {
+    select.where(_.orgId eqs orgId).and(_.id eqs id).one()
   }
 
-  def findAll: Future[Seq[Mail]] = {
-    select.fetchEnumerator() run Iteratee.collect()
+  def findAll(orgId:String): Future[Seq[Mail]] = {
+    select.where(_.orgId eqs orgId).fetchEnumerator() run Iteratee.collect()
   }
-
 }
 

@@ -19,15 +19,15 @@ class MailController extends Controller{
         Ok(Json.toJson(entity)))
   }
 
-  def getById(id: String) = Action.async {
+  def getById(org:String,id: String) = Action.async {
     request =>
-      MailService.get(id) map (result =>
+      MailService.get(org,id) map (result =>
         Ok(Json.toJson(result)))
   }
 
-  def getAll = Action.async {
+  def getAll(org:String) = Action.async {
     request =>
-      MailService.getAll map (result =>
+      MailService.getAll(org) map (result =>
         Ok(Json.toJson(result)))
   }
 

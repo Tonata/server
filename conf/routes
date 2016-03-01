@@ -103,6 +103,12 @@ GET         /api/locations/:orgId                       @controllers.organisatio
 #Organisation API
 
 
+POST        /api/organisation/post                      @controllers.organisation.OrganisationController.createOrUpdate
+GET         /api/organisation/get/:id                   @controllers.organisation.OrganisationController.getById(id)
+GET         /api/organisation/get                       @controllers.organisation.OrganisationController.getAll
+
+
+
 POST        /api/organisationlogo/post                  @controllers.organisation.OrganisationLogoController.createOrUpdate
 GET         /api/organisationlogo/get/:orgId/:id        @controllers.organisation.OrganisationLogoController.getOrganisationLogo(orgId,id)
 GET         /api/organisationlogo/get/:orgId            @controllers.organisation.OrganisationLogoController.getAllOrganisationLogos(orgId)
@@ -165,8 +171,9 @@ GET         /api/util/status/get/:id                    @controllers.util.Status
 GET         /api/util/statuses/get                      @controllers.util.StatusController.getAll
 
 POST        /api/util/mail/post                         @controllers.util.MailController.createOrUpdate
-GET         /api/util/mail/get/:id                      @controllers.util.MailController.getById(id)
-GET         /api/util/mails/get                         @controllers.util.MailController.getAll
+GET         /api/util/mail/get/:orgId/:id               @controllers.util.MailController.getById(orgId,id)
+GET         /api/util/mails/get/:org                    @controllers.util.MailController.getAll(org)
+
 
 
 

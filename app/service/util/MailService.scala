@@ -14,12 +14,12 @@ object MailService extends Service{
   def saveOrUpdate(entity: Mail): Future[ResultSet] = {
     MailRepository.save(entity)
   }
-  def get(id:String):Future[Option[Mail]] ={
-    MailRepository.findById(id)
+  def get(orgId:String, id:String):Future[Option[Mail]] ={
+    MailRepository.findById(orgId,id)
   }
 
-  def getAll:Future[Seq[Mail]] ={
-    MailRepository.findAll
+  def getAll(orgId:String):Future[Seq[Mail]] ={
+    MailRepository.findAll(orgId)
   }
 
 }
