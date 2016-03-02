@@ -1,7 +1,6 @@
 package controllers.content
 
 import domain.content.Category
-import model.CategoryModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.CategoryService
@@ -18,8 +17,7 @@ class CategoryController extends Controller {
   def create = Action.async(parse.json) {
     request =>
       val input = request.body
-      val categoryModel = Json.fromJson[CategoryModel](input).get
-      val category = categoryModel.getDomain()
+      val category = Json.fromJson[Category](input).get
       val results = service.create(category)
       results map(result =>Ok(Json.toJson(category)))
   }

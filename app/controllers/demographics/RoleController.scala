@@ -1,10 +1,11 @@
 package controllers.demographics
 
 import domain.demographics.Role
-import model.RoleModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.demographics.RoleService
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by hashcode on 2015/06/28.
@@ -15,8 +16,7 @@ class RoleController extends Controller{
   def create = Action.async(parse.json) {
     request =>
       val input = request.body
-      val roleModel = Json.fromJson[RoleModel](input).get
-      val role = roleModel.getDomain()
+      val role = Json.fromJson[Role](input).get
       val results = service.saveOrUpdate(role)
       results map(result =>Ok(Json.toJson(role)))
   }

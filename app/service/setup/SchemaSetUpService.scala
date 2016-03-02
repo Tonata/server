@@ -5,8 +5,9 @@ import repository.location.{ContactTypeRepository, AddressTypeRepository, Locati
 import repository.organisation.{OrganisationLogoRepository, OrganisationRepository}
 import repository.person._
 import repository.storage.StorageUrlRepository
-import repository.util.{MailRepository, StatusRepository}
+import repository.util.{TokenRepository, KeysRepository, MailRepository, StatusRepository}
 import service.Service
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by hashcode on 2015/11/07.
@@ -51,6 +52,8 @@ object SchemaSetUpService extends Service {
     plang <- PersonLanguageRepository.create.ifNotExists().future()
     clogos <- OrganisationLogoRepository.create.ifNotExists().future()
     clinks <- StorageUrlRepository.create.ifNotExists().future()
+    tokenkeys <-KeysRepository.create.ifNotExists().future()
+    token <-TokenRepository.create.ifNotExists().future()
 
   } yield person
 }

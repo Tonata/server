@@ -1,7 +1,6 @@
 package controllers.content
 
 import domain.content.ContentType
-import model.ContentTypeModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.ContentTypeService
@@ -17,8 +16,7 @@ class ContentTypeController extends Controller{
   def create = Action.async(parse.json) {
     request =>
       val input = request.body
-      val contentModel = Json.fromJson[ContentTypeModel](input).get
-      val content = contentModel.getDomain()
+      val content = Json.fromJson[ContentType](input).get
       val results = service.create(content)
       results map(result =>Ok(Json.toJson(content)))
   }

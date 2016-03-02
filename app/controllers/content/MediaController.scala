@@ -1,7 +1,6 @@
 package controllers.content
 
 import domain.content.Media
-import model.MediaModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.MediaService
@@ -15,8 +14,7 @@ class MediaController  extends Controller{
   def create = Action.async(parse.json) {
     request =>
       val input = request.body
-      val contentModel = Json.fromJson[MediaModel](input).get
-      val content = contentModel.getDomain()
+      val content = Json.fromJson[Media](input).get
       val results = MediaService.create(content)
       results map(result =>Ok(Json.toJson(content)))
   }

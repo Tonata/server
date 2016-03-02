@@ -1,7 +1,10 @@
 package controllers.location
 
+import domain.location.ContactType
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
+import service.location.ContactTypeService
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by hashcode on 2015/11/09.

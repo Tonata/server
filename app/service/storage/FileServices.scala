@@ -9,7 +9,6 @@ import com.sksamuel.scrimage.{Format, FormatDetector}
 import domain.storage.{FileMeta, FileResults}
 import org.imgscalr.Scalr
 import repository.storage.FilesRepository
-import FileTypeService
 
 import scala.concurrent.Future
 

@@ -4,6 +4,7 @@ import domain.organisation.Location
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.organisation.LocationService
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by hashcode on 2016/02/25.

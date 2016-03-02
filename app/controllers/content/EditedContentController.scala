@@ -1,7 +1,6 @@
 package controllers.content
 
 import domain.content.EditedContent
-import model.EditedContentModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.EditedContentService
@@ -16,8 +15,7 @@ class EditedContentController extends Controller{
   def create = Action.async(parse.json) {
     request =>
       val input = request.body
-      val contentModel = Json.fromJson[EditedContentModel](input).get
-      val content = contentModel.getDomain()
+      val content =Json.fromJson[EditedContent](input).get
       val results = EditedContentService.create(content)
       results map(result =>Ok(Json.toJson(content)))
   }
@@ -32,7 +30,8 @@ class EditedContentController extends Controller{
   }
 
   def getContents(org: String,initV:Int) = Action.async {
-    EditedContentService.getContents(org,initV.toInt) map (content => Ok(Json.toJson(content)))
+    EditedContentService.getContents(org,initV.toInt) map
+      (content => Ok(Json.toJson(content.toSeq)))
   }
 
   def update = Action.async(parse.json) {

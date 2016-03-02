@@ -4,6 +4,7 @@ import play.api.libs.json.Json
 import play.api.mvc._
 import service.setup.{AccountSetupService, SchemaSetUpService}
 import service.util.TokenService
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class Application extends Controller {
   val token = TokenService()
@@ -11,7 +12,6 @@ class Application extends Controller {
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
   }
-
   def setup = Action.async {
     val results = for {
       setup <- SchemaSetUpService.createCompanySchema

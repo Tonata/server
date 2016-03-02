@@ -4,6 +4,7 @@ import com.datastax.driver.core.ResultSet
 import domain.organisation.Organisation
 import repository.organisation.OrganisationRepository
 import service.Service
+import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.concurrent.Future
 

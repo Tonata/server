@@ -17,7 +17,7 @@ import scala.concurrent.Future
 class PersonImagesRepository extends CassandraTable[PersonImagesRepository, PersonImages] {
 
 
-  object company extends StringColumn(this) with PartitionKey[String]
+  object org extends StringColumn(this) with PartitionKey[String]
 
   object personId extends StringColumn(this) with PrimaryKey[String]
 
@@ -35,7 +35,7 @@ class PersonImagesRepository extends CassandraTable[PersonImagesRepository, Pers
 
   override def fromRow(r: Row): PersonImages = {
     PersonImages(
-      company(r),
+      org(r),
       personId(r),
       id(r),
       url(r),
@@ -55,7 +55,7 @@ object PersonImagesRepository extends PersonImagesRepository with RootConnector 
 
   def save(image: PersonImages): Future[ResultSet] = {
     insert
-      .value(_.company, image.company)
+      .value(_.org, image.org)
       .value(_.personId, image.personId)
       .value(_.id, image.id)
       .value(_.url, image.url)
@@ -66,15 +66,15 @@ object PersonImagesRepository extends PersonImagesRepository with RootConnector 
       .future()
   }
 
-  def getPersonImage(company: String, personId: String, id: String): Future[Option[PersonImages]] = {
-    select.where(_.company eqs company).and(_.personId eqs personId).and(_.id eqs id).one()
+  def getPersonImage(org: String, personId: String, id: String): Future[Option[PersonImages]] = {
+    select.where(_.org eqs org).and(_.personId eqs personId).and(_.id eqs id).one()
   }
 
-  def getPersonImages(company: String, personId: String): Future[Seq[PersonImages]] = {
-    select.where(_.company eqs company).and(_.personId eqs personId) fetchEnumerator() run Iteratee.collect()
+  def getPersonImages(org: String, personId: String): Future[Seq[PersonImages]] = {
+    select.where(_.org eqs org).and(_.personId eqs personId) fetchEnumerator() run Iteratee.collect()
   }
 
-  def getCompanyPeopleImages(company: String): Future[Seq[PersonImages]] = {
-    select.where(_.company eqs company) fetchEnumerator() run Iteratee.collect()
+  def getCompanyPeopleImages(org: String): Future[Seq[PersonImages]] = {
+    select.where(_.org eqs org) fetchEnumerator() run Iteratee.collect()
   }
 }

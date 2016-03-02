@@ -22,6 +22,6 @@ case class EditedContent(org: String,
 }
 
 object EditedContent {
-  implicit val contentTypeFmt = Json.format[EditedContent]
+  implicit val editedContentFmt = Json.format[EditedContent]
 
 }

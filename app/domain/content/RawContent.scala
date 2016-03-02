@@ -22,6 +22,6 @@ case class RawContent(org: String,
 }
 
 object RawContent {
-  implicit val rawcontentFmt = Json.format[RawContent]
+  implicit val rawContentFmt = Json.format[RawContent]
 
 }

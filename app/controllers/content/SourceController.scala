@@ -1,7 +1,6 @@
 package controllers.content
 
 import domain.content.Source
-import model.SourceModel
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.content.SourceService
@@ -17,8 +16,7 @@ class SourceController extends Controller{
   def create = Action.async(parse.json) {
     request =>
       val input = request.body
-      val sourceModel = Json.fromJson[SourceModel](input).get
-      val source = sourceModel.getDomain()
+      val source = Json.fromJson[Source](input).get
       val results = service.create(source)
       results map(result =>Ok(Json.toJson(source)))
   }

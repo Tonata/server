@@ -21,7 +21,7 @@ case class  PublishedContent(org: String,
 
 }
 object PublishedContent {
-  implicit val pcontnetFmt = Json.format[PublishedContent]
+  implicit val publishedContentFmt = Json.format[PublishedContent]
 
 }
 

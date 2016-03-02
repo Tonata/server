@@ -4,6 +4,7 @@ import domain.organisation.OrganisationLogo
 import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import service.organisation.OrganisationLogoServices
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by hashcode on 2016/01/03.
