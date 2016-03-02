@@ -36,8 +36,7 @@ object SchemaSetUpService extends Service {
 
     //util
     status <- StatusRepository.create.ifNotExists().future()
-
-
+  
     //people
     emailp <- UsersRepository.create.ifNotExists().future()
     company <- OrganisationRepository.create.ifNotExists().future()
