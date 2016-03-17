@@ -1,5 +1,6 @@
 package service.setup
 
+import repository.content._
 import repository.demographics._
 import repository.location.{ContactTypeRepository, AddressTypeRepository, LocationTypeRepository}
 import repository.organisation.{OrganisationLogoRepository, OrganisationRepository}
@@ -17,6 +18,13 @@ object SchemaSetUpService extends Service {
   def createCompanySchema = for {
   //company
     person <- PersonRepository.create.ifNotExists().future()
+    ccat <-CategoryRepository.create.ifNotExists().future()
+    cont <-ContentTypeRepository.create.ifNotExists().future()
+     econt <- EditedContentRepository.create.ifNotExists().future()
+    med <-MediaRepository.create.ifNotExists().future()
+    pubCont <-PublishedContentRepository.create.ifNotExists().future()
+    racont <-RawContentRepository.create.ifNotExists().future()
+    sour <-SourceRepository.create.ifNotExists().future()
 
 
     // demo
@@ -39,7 +47,7 @@ object SchemaSetUpService extends Service {
 
     //people
     emailp <- UsersRepository.create.ifNotExists().future()
-    company <- OrganisationRepository.create.ifNotExists().future()
+    org <- OrganisationRepository.create.ifNotExists().future()
     locatype <- LocationTypeRepository.create.ifNotExists().future()
     addretype <- AddressTypeRepository.create.ifNotExists().future()
     mail <- MailRepository.create.ifNotExists().future()
