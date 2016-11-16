@@ -59,7 +59,6 @@ object SchemaSetUpService extends Service {
     plang <- PersonLanguageRepository.create.ifNotExists().future()
     clogos <- OrganisationLogoRepository.create.ifNotExists().future()
     clinks <- StorageUrlRepository.create.ifNotExists().future()
-    tokenkeys <-KeysRepository.create.ifNotExists().future()
     token <-TokenRepository.create.ifNotExists().future()
 
   } yield person

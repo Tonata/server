@@ -2,7 +2,7 @@ package repository.organisation
 
 import com.websudos.phantom.CassandraTable
 import com.websudos.phantom.dsl._
-import com.websudos.phantom.iteratee.Iteratee
+import com.websudos.phantom.reactivestreams._
 import com.websudos.phantom.keys.PartitionKey
 import conf.connection.DataConnection
 import domain.organisation.Organisation
@@ -22,7 +22,7 @@ sealed class OrganisationRepository extends CassandraTable[OrganisationRepositor
 
   object name extends StringColumn(this)
 
-  object details extends MapColumn[OrganisationRepository, Organisation, String, String](this)
+  object details extends MapColumn[String, String](this)
 
   object adminattached extends StringColumn(this)
 
@@ -62,12 +62,13 @@ object OrganisationRepository extends OrganisationRepository with RootConnector 
   }
 
   def updateCompany(company:Organisation):Future[ResultSet] ={
-    update.where(_.id eqs company.id)
-      .modify(_.name setTo  company.name)
-      .and(_.details setTo company.details)
-      .and(_.adminattached setTo company.adminattached)
-      .and(_.date setTo company.date)
-      .and(_.state setTo company.state)
+    insert
+      .value(_.id, company.id)
+      .value(_.name, company.name)
+      .value(_.details, company.details)
+      .value(_.adminattached, company.adminattached)
+      .value(_.date, company.date)
+      .value(_.state, company.state)
       .future()
   }
 
