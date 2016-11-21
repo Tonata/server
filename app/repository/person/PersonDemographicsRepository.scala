@@ -2,6 +2,7 @@ package repository.person
 
 import com.datastax.driver.core.Row
 import com.websudos.phantom.CassandraTable
+import com.websudos.phantom.column.PrimitiveColumn
 import com.websudos.phantom.dsl._
 import com.websudos.phantom.iteratee.Iteratee
 import com.websudos.phantom.keys.PartitionKey
@@ -21,6 +22,8 @@ class PersonDemographicsRepository extends CassandraTable[PersonDemographicsRepo
 
   object genderId extends StringColumn(this)
 
+  object raceId extends StringColumn(this)
+
   object dateOfBirth extends DateColumn(this)
 
   object maritalStatusId extends StringColumn(this)
@@ -36,6 +39,7 @@ class PersonDemographicsRepository extends CassandraTable[PersonDemographicsRepo
       id(r),
       personId(r),
       genderId(r),
+      raceId(r),
       dateOfBirth(r),
       maritalStatusId(r),
       numberOfDependencies(r),
@@ -56,6 +60,7 @@ object PersonDemographicsRepository extends PersonDemographicsRepository with Ro
       .value(_.personId, demographics.personId)
       .value(_.id, demographics.id)
       .value(_.genderId, demographics.genderId)
+      .value(_.raceId, demographics.raceId)
       .value(_.dateOfBirth, demographics.dateOfBirth)
       .value(_.date, demographics.date)
       .value(_.maritalStatusId, demographics.maritalStatusId)

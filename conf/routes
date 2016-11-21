@@ -103,7 +103,7 @@ GET         /api/locations/:orgId                       @controllers.organisatio
 #Organisation API
 
 
-POST        /api/organisation/post                      @controllers.organisation.OrganisationController.createOrUpdate
+POST        /api/organisation/post                     controllers.organisation.OrganisationController.createOrUpdate
 GET         /api/organisation/get/:id                   @controllers.organisation.OrganisationController.getById(id)
 GET         /api/organisation/get                       @controllers.organisation.OrganisationController.getAll
 

@@ -10,6 +10,7 @@ import play.api.libs.json.Json
 case class PersonDemographics(id: String,
                               personId: String,
                               genderId: String,
+                              raceId: String,
                               dateOfBirth: Date,
                               maritalStatusId: String,
                               numberOfDependencies: Int,
