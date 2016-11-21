@@ -20,11 +20,12 @@ object SchemaSetUpService extends Service {
     person <- PersonRepository.create.ifNotExists().future()
     ccat <-CategoryRepository.create.ifNotExists().future()
     cont <-ContentTypeRepository.create.ifNotExists().future()
-     econt <- EditedContentRepository.create.ifNotExists().future()
+    econt <- EditedContentRepository.create.ifNotExists().future()
     med <-MediaRepository.create.ifNotExists().future()
     pubCont <-PublishedContentRepository.create.ifNotExists().future()
     racont <-RawContentRepository.create.ifNotExists().future()
     sour <-SourceRepository.create.ifNotExists().future()
+
 
 
     // demo

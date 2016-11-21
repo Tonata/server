@@ -1,8 +1,8 @@
 package api
 
 import com.google.gson.Gson
-import domain.User
-import model.UserModel
+//import domain.User
+//import model.UserModel
 import org.junit.runner.RunWith
 import org.specs2.mutable.Specification
 import org.specs2.runner.JUnitRunner
@@ -22,8 +22,8 @@ class UserControllerTest extends Specification{
 
   "User Controller" should {
     "Save an Object " in new WithApplication {
-      val user = UserModel("other","first","lastname","username",true,"test13",Set("1234","777"),List("1234","3333"),List("1234"))
-//      val jsonstring = gson.toJson(user).stripMargin
+//      val user = UserModel("other","first","lastname","username",true,"test13",Set("1234","777"),List("1234","3333"),List("1234"))
+////      val jsonstring = gson.toJson(user).stripMargin
       val jsonstring ="""{"otherName":"other","firstName":"first","lastName":"lastname","username":"username","enable":true,"password":"test13","role":["23"],"contact":["56"],"address":["231"]}"""
 
       val json = Json.parse(jsonstring)
