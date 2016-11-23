@@ -1,5 +1,6 @@
 package conf.util
 
+import akka.stream.Materializer
 import controllers.Default
 import play.api.Logger
 import play.api.mvc.{Filter, RequestHeader, Result}
@@ -39,4 +40,6 @@ case class CORSFilter() extends Filter{
       )}
     }
   }
+
+  override implicit def mat: Materializer = ???
 }
