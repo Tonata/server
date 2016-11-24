@@ -1,4 +1,4 @@
-package service
+package service.person
 
 import java.util.Date
 
@@ -8,9 +8,6 @@ import domain.person._
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import service.demographics.{GenderService, LanguageService}
 import service.location.{AddressTypeService, ContactTypeService}
-import service.person._
-
-import scala.util.{Failure, Success}
 
 /**
   * Created by user42 on 2016/09/08.
