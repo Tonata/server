@@ -1,74 +1,55 @@
 package service.person
 
-import java.util.Date
-
-import domain.demographics.{Gender, Language, Race}
-import domain.location.{AddressType, ContactType}
 import domain.person._
-import org.scalatest.{FeatureSpec, GivenWhenThen}
 import org.scalatestplus.play.PlaySpec
-import service.demographics.{GenderService, LanguageService}
-import service.location.{AddressTypeService, ContactTypeService}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by user42 on 2016/09/08.
   */
 class PersonServiceTest extends PlaySpec{
 
-  "PersonSrevice # getById" should{
-    "be true when the person id exists" in {
+  "PersonSrevice # getPerson" should{
+    "find a person given an organisation and ID" in {
 
-      val personRecord = Person ("HBC","123", "John",
+      val personRecord = Person ("HBC","35587", "John",
         "john@example.com", "Doe" , "*",
         true,false,true,true, "the state")
-
-
-      val addressType = AddressType ("ADT001", "Residential", "")
-      val personAddress = PersonAddress("Add1", "123", "1 Tenant Street",
-        "7925", "ADT001", new Date(), "")
-
-      val language = Language("LANG1", "english", "")
-      val personLang = PersonLanguage("001", "123", "LANG1", "English",
-        "English", "English", new Date(),
-        "")
-
-      val gender = Gender("GEN01", "Male", "")
-      val raceID = Race("R1", "BLACK", "")
-      val personDemo = PersonDemographics("Demo1", "123", "GEN01",
-        "R1", new Date (1989, 2, 12), "1", 5, new Date(), "current-state")
-
-      val contactType = ContactType("CON001", "cell", "")
-      val personContact = PersonContact("1", "123", "CON001",
-        "0784117523", "Active",
-        new Date(), "")
-
 
       val personService = PeopleService
       personService.saveOrUpdate(personRecord)
 
-      val personAddressService = PersonAddressService
-      personAddressService.saveOrUpdate(personAddress)
+      val person = personService.getPerson("HBC", "35587")
 
-      val addressService    = AddressTypeService
-      addressService.saveOrUpdate(addressType)
+      person map {
+        o => o match {
+          case Some(x) => {
+            assert(x.emailAddress === "john@example.com")}
+        }
+      }
 
-      val langService = LanguageService
-      langService.saveOrUpdate(language)
 
-      val personLangService = PersonLanguageService
-      personLangService.saveOrUpdate(personLang)
+    }
+  }
 
-      val genderServ = GenderService
-      genderServ.saveOrUpdate(gender)
+  "PersonSrevice # getPersonByEmail" should{
+    "find a person given an email" in {
 
-      val personDemoService = PersonDemographicsService
-      personDemoService.saveOrUpdate(personDemo)
+      val personRecord = Person ("ELF","354", "Jane",
+        "jane@example.com", "Max" , "*",
+        true,false,true,true, "the state")
 
-      val contact = ContactTypeService
-      contact.saveOrUpdate(contactType)
+      val personService = PeopleService
+      personService.saveOrUpdate(personRecord)
 
-      val personContactServ = PersonContactService
-      personContactServ.saveOrUpdate(personContact)
+      val person = personService.getPersonByEmail("jane@example.com")
+
+      person map {
+        o => o match {
+          case Some(x) => {
+            assert(x.org === "ELF")}
+        }
+      }
 
 
 

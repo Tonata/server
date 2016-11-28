@@ -3,22 +3,33 @@ package service.content
 import domain.content.Category
 import org.scalatest.{FeatureSpec, GivenWhenThen}
 import org.scalatestplus.play.PlaySpec
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
  * Created by hashcode on 2015/07/27.
  */
 class CateGoryServiceTest extends PlaySpec{
 
-"CategoryService # Apply" should{
-  "be true when the Category id exists" in {
+"CategoryService # getCategoryByID" should{
 
-    val  cate1 = Category("1","Health1","Health Care Category 2")
+  "retrieved a category based on ID given" in {
+
+    val  cat1 = Category("1","Health1","Health Care Category 2")
    //val newcate = Category("1","Health1","Health Care Category 1")
 
-    val categoryService = CategoryService().create(cate1)
+    val categoryService = CategoryService
 
 
+    categoryService.apply().create(cat1)
 
+    val retrievedCat= categoryService.apply().getCategory("1")
+
+    retrievedCat map {
+      o => o match {
+        case Some(x) => {
+          assert(x.name === "Health1")}
+      }
+    }
 
   }
 }
