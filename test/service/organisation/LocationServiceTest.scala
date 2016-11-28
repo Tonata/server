@@ -15,6 +15,7 @@ class LocationServiceTest extends PlaySpec{
 
   "LocationService # findByID" should{
 
+
     "find the location of an organisation given name and id" in{
 
       val locTypeService  = LocationTypeService
