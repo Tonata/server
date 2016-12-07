@@ -22,56 +22,80 @@ class PersonServiceTest extends PlaySpec{
         "john@example.com", "Doe" , "*",
         true,false,true,true, "the state")
 
-
-      val addressType = AddressType ("ADT001", "Residential", "")
-      val personAddress = PersonAddress("Add1", "123", "1 Tenant Street",
-        "7925", "ADT001", new Date(), "")
-
-      val language = Language("LANG1", "english", "")
-      val personLang = PersonLanguage("001", "123", "LANG1", "English",
-        "English", "English", new Date(),
-        "")
-
-      val gender = Gender("GEN01", "Male", "")
-      val raceID = Race("R1", "BLACK", "")
-      val personDemo = PersonDemographics("Demo1", "123", "GEN01",
-        "R1", new Date (1989, 2, 12), "1", 5, new Date(), "current-state")
-
-      val contactType = ContactType("CON001", "cell", "")
-      val personContact = PersonContact("1", "123", "CON001",
-        "0784117523", "Active",
-        new Date(), "")
-
-
       val personService = PeopleService
       personService.saveOrUpdate(personRecord)
 
-      val personAddressService = PersonAddressService
-      personAddressService.saveOrUpdate(personAddress)
+      val person = personService.getPersonByEmail("john@example.com")
 
-      val addressService    = AddressTypeService
-      addressService.saveOrUpdate(addressType)
-
-      val langService = LanguageService
-      langService.saveOrUpdate(language)
-
-      val personLangService = PersonLanguageService
-      personLangService.saveOrUpdate(personLang)
-
-      val genderServ = GenderService
-      genderServ.saveOrUpdate(gender)
-
-      val personDemoService = PersonDemographicsService
-      personDemoService.saveOrUpdate(personDemo)
-
-      val contact = ContactTypeService
-      contact.saveOrUpdate(contactType)
-
-      val personContactServ = PersonContactService
-      personContactServ.saveOrUpdate(personContact)
+      person map{
+        o => o match{
+          case Some(x) =>{
+            assert(x.org === "HBC")
+          }
+        }
+      }
 
 
 
+    }
+  }
+
+  "PersonService #getById" should{
+    "be true when the id exists" in{
+
+      val personAddress =  PersonAddress("Add1","123","1 Tenant Street","7925","ADT001", new Date(),"")
+
+      val personService = PersonAddressService
+      personService.saveOrUpdate(personAddress)
+        val addressType = personService.getValues("ADT001")
+
+      personAddress map {
+        o => o match{
+          case Some(x) =>{
+            assert(x.description === "1 Tenant Street")
+          }
+        }
+      }
+    }
+  }
+
+
+
+
+
+  "PersonService #getById" should{
+    "be true when the id exists" in{
+       val personLang = PersonLanguage("001", "123","LANG1", "English","English", "English", new Date(),"")
+      val personService =  PersonLanguageService
+      personService.saveOrUpdate(personLang)
+
+      val language = personService.getValues("123")
+
+      personService map{
+        o => o match{
+          case Some(x) =>{
+            assert(x.writing === "English")
+          }
+        }
+      }
+    }
+  }
+
+  "PersonService #getById" should{
+    "be true when the id exists" in {
+      val personContact = PersonContact("1", "123", "CON001", "0766651268", "Active", new Date(),"")
+      val personService = PersonContactService
+      personService.saveOrUpdate(personContact)
+
+      val contactType = personService.getValues("0766651268")
+
+      contactType map{
+        o => o match{
+          case Some(x) =>{
+            assert(x.contactValue === "0766651268")
+          }
+        }
+      }
     }
   }
 
