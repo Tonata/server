@@ -1,29 +1,24 @@
 package service.person
 
-import java.util.Date
-
-import domain.demographics.{Gender, Language, Race}
-import domain.location.{AddressType, ContactType}
 import domain.person._
-import org.scalatest.{FeatureSpec, GivenWhenThen}
 import org.scalatestplus.play.PlaySpec
-import service.demographics.{GenderService, LanguageService}
-import service.location.{AddressTypeService, ContactTypeService}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Created by user42 on 2016/09/08.
   */
 class PersonServiceTest extends PlaySpec{
 
-  "PersonSrevice # getById" should{
-    "be true when the person id exists" in {
+  "PersonSrevice # getPerson" should{
+    "find a person given an organisation and ID" in {
 
-      val personRecord = Person ("HBC","123", "John",
+      val personRecord = Person ("HBC","35587", "John",
         "john@example.com", "Doe" , "*",
         true,false,true,true, "the state")
 
       val personService = PeopleService
       personService.saveOrUpdate(personRecord)
+
 
       val person = personService.getPersonByEmail("john@example.com")
 
@@ -68,6 +63,40 @@ class PersonServiceTest extends PlaySpec{
        val personLang = PersonLanguage("001", "123","LANG1", "English","English", "English", new Date(),"")
       val personService =  PersonLanguageService
       personService.saveOrUpdate(personLang)
+
+
+      val person = personService.getPerson("HBC", "35587")
+
+      person map {
+        o => o match {
+          case Some(x) => {
+            assert(x.emailAddress === "john@example.com")}
+        }
+      }
+
+
+    }
+  }
+
+  "PersonSrevice # getPersonByEmail" should{
+    "find a person given an email" in {
+
+      val personRecord = Person ("ELF","354", "Jane",
+        "jane@example.com", "Max" , "*",
+        true,false,true,true, "the state")
+
+      val personService = PeopleService
+      personService.saveOrUpdate(personRecord)
+
+      val person = personService.getPersonByEmail("jane@example.com")
+
+      person map {
+        o => o match {
+          case Some(x) => {
+            assert(x.org === "ELF")}
+        }
+      }
+
 
       val language = personService.getValues("123")
 
