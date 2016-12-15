@@ -1,13 +1,13 @@
 package controllers.storage
 
-import java.text.SimpleDateFormat
-
+import akka.stream.IOResult
+import akka.stream.scaladsl._
 import domain.storage.FileMeta
 import play.api.libs.iteratee.Enumerator
 import play.api.libs.json.Json
+import play.api.libs.streams.Streams
 import play.api.mvc._
 import service.storage.{FileServices, FileTypeService}
-
 
 import scala.concurrent.Future
 
@@ -47,18 +47,14 @@ class FilesController extends Controller {
   def getFile(id: String, filename: String) = Action {
     import scala.concurrent.ExecutionContext.Implicits.global
     FileServices.getFile(id) match {
-      case Some(file) => Result(
-        ResponseHeader(OK, Map(
-          CONTENT_LENGTH -> file.length.toString,
-          CONTENT_TYPE -> file.contentType.getOrElse(BINARY),
-          DATE -> new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", java.util.Locale.US).format(file.uploadDate)
-        )),
-        Enumerator.fromStream(file.inputStream)
-      )
+      case Some(file) => {
+        val dataContent: Enumerator[Array[Byte]] = Enumerator.fromStream(file.inputStream)
+        val source = Source.fromPublisher(Streams.enumeratorToPublisher(dataContent))
+        Ok.chunked(source).as(file.contentType.getOrElse(BINARY))
+      }
       case None => NotFound
     }
   }
-
 
   //    def handleFilePartAsByteArray: PartHandler[FilePart[Array[Byte]]] =
   //      handleFilePart {

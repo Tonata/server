@@ -62,12 +62,13 @@ object OrganisationRepository extends OrganisationRepository with RootConnector 
   }
 
   def updateCompany(company:Organisation):Future[ResultSet] ={
-    update.where(_.id eqs company.id)
-      .modify(_.name setTo  company.name)
-      .and(_.details setTo company.details)
-      .and(_.adminattached setTo company.adminattached)
-      .and(_.date setTo company.date)
-      .and(_.state setTo company.state)
+    insert
+      .value(_.id, company.id)
+      .value(_.name, company.name)
+      .value(_.details, company.details)
+      .value(_.adminattached, company.adminattached)
+      .value(_.date, company.date)
+      .value(_.state, company.state)
       .future()
   }
 
