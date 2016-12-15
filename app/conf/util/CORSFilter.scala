@@ -13,7 +13,7 @@ case class CORSFilter() extends Filter{
   import ExecutionContext.Implicits.global
   lazy val allowedDomain = play.api.Play.current.configuration.getString("cors.allowed.domain")
   def isPreFlight(r: RequestHeader) =(
-    r.method.toLowerCase.equals("options")
+   r.method.toLowerCase.equals("options")
       &&
       r.headers.get("Access-Control-Request-Method").nonEmpty
     )
