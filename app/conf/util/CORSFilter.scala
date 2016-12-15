@@ -40,6 +40,5 @@ case class CORSFilter() extends Filter{
       )}
     }
   }
-
   override implicit def mat: Materializer = ???
 }
